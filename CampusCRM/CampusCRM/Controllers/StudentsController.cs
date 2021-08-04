@@ -1,30 +1,31 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using AutoMapper;
-using CampusCRM.Contexts;
-using CampusCRM.Models;
+using CampusCRM.MVC.Models;
+using CampusCRM.BLL.Interfaces;
+using CampusCRM.BLL.ModelsDTO;
 
-namespace CampusCRM.Controllers
+
+namespace CampusCRM.MVC.Controllers
 {
     public class StudentsController : Controller
     {
-        private readonly IRepository<Student> _studentRepository;
-        public StudentsController(CampusContext context)
+        private readonly IStudentService _studentService;
+
+        private readonly IMapper _mapper;
+        public StudentsController(IMapper mapper, IStudentService studentService)
         {
-            _studentRepository = new StudentsRepository(context);
+            _mapper = mapper;
+
+            _studentService = studentService;
         }
+
         // GET: StudentsController
         public ActionResult Index()
         {
-            var students = _studentRepository.GetAll();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Student, StudentModel>()).CreateMapper();
-            var studentsVModels = mapper.Map<IEnumerable<Student>, List<StudentModel>>(students);
+            var students = _studentService.GetStudents();
+            var studentsVModels = _mapper.Map<IEnumerable<StudentDTO>, List<StudentModel>>(students);
 
             return View(studentsVModels);
         }
@@ -33,7 +34,7 @@ namespace CampusCRM.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            return View("Edit");
         }
 
         // POST: StudentsController/Create
@@ -47,30 +48,20 @@ namespace CampusCRM.Controllers
                 Debug.WriteLine($" INFO state = {ModelState.IsValid}");
                 return View(student);
             }
-            _studentRepository.Create(new Student() {
-                Name = student.Name,
-                Surname = student.Surname,
-                Age = student.Age
-            });
 
-            return RedirectToAction("Index", "Students");
+            _studentService.AddStudent(_mapper.Map<StudentDTO>(student));
+
+            return RedirectToAction("Index");
         }
 
         // GET: StudentsController/Edit/5
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var studentDto = _studentRepository.Get(id);
+            var student = _studentService.GetStudent(id);
 
-            var student = new StudentModel()
-            {
-                Id = studentDto.Id,
-                Name = studentDto.Name,
-                Surname = studentDto.Surname,
-                Age = studentDto.Age
-            };
-            
-            return View(student);
+            return View(_mapper.Map<StudentModel>(student));
+
         }
 
         // POST: StudentsController/Edit/5
@@ -84,16 +75,10 @@ namespace CampusCRM.Controllers
                 Debug.WriteLine($" INFO notstate = {ModelState.IsValid}");
                 return View(student);
             }
-            Debug.WriteLine($" INFO +state = {ModelState.IsValid}");
-            _studentRepository.Update(new Student()
-           {
-                Id = student.Id,
-                Name = student.Name,
-                Surname = student.Surname,
-                Age = student.Age
-           });
-            
-           return RedirectToAction("Index", "Students");
+            //Debug.WriteLine($" INFO +state = {ModelState.IsValid}");
+            _studentService.EditStudent(_mapper.Map<StudentDTO>(student));
+
+            return RedirectToAction("Index");
             
         }
 
@@ -101,9 +86,9 @@ namespace CampusCRM.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            _studentRepository.Delete(id);
+            _studentService.DeleteStudent(id);
 
-            return RedirectToAction("Index", "Students");
+            return RedirectToAction("Index");
         }
     }
 }

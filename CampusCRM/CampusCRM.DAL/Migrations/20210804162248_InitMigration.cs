@@ -1,4 +1,7 @@
-﻿namespace CampusCRM.DAL.Migrations
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+
+namespace CampusCRM.DAL.Migrations
 {
     public partial class InitMigration : Migration
     {

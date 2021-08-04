@@ -1,4 +1,6 @@
-﻿using CampusCRM.Models;
+﻿
+using CampusCRM.DAL.Entities;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace CampusCRM.DAL.Contexts

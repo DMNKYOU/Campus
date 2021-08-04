@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CampusCRM.MVC", "CampusCRM\CampusCRM.MVC.csproj", "{AD999A60-15EB-4261-8FF4-A29F2A217CD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CampusCRM.AMVC", "CampusCRM\CampusCRM.AMVC.csproj", "{AD999A60-15EB-4261-8FF4-A29F2A217CD6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CE5E3FDA-400F-4C53-99A7-72D1BAFAF533} = {CE5E3FDA-400F-4C53-99A7-72D1BAFAF533}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusCRM.BLL", "CampusCRM.BLL\CampusCRM.BLL.csproj", "{CE5E3FDA-400F-4C53-99A7-72D1BAFAF533}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CampusCRM.BLL", "CampusCRM.BLL\CampusCRM.BLL.csproj", "{CE5E3FDA-400F-4C53-99A7-72D1BAFAF533}"
+	ProjectSection(ProjectDependencies) = postProject
+		{113280D8-AC7C-43E7-AABF-5A6843ACA92D} = {113280D8-AC7C-43E7-AABF-5A6843ACA92D}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusCRM.DAL", "CampusCRM.DAL\CampusCRM.DAL.csproj", "{113280D8-AC7C-43E7-AABF-5A6843ACA92D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CampusCRM.DAL", "CampusCRM.DAL\CampusCRM.DAL.csproj", "{113280D8-AC7C-43E7-AABF-5A6843ACA92D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

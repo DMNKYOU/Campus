@@ -8,11 +8,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CampusCRM.Contexts;
-using CampusCRM.Models;
+using AutoMapper;
+using CampusCRM.BLL.Interfaces;
+using CampusCRM.BLL.Services;
+using CampusCRM.DAL;
+using CampusCRM.DAL.Contexts;
+using CampusCRM.DAL.Interfaces;
+using CampusCRM.MVC.Mappings;
 using Microsoft.EntityFrameworkCore;
 
-namespace CampusCRM
+namespace CampusCRM.MVC
 {
     public class Startup
     {
@@ -26,10 +31,19 @@ namespace CampusCRM
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);///////////////////////////////
+
             services.AddControllersWithViews();
-            services.AddDbContext<CampusContext>(options =>
-                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusCRMDB;Trusted_Connection=True;"));
-            services.AddScoped<IRepository<Student>, StudentsRepository>();
+            services.AddDbContext<CampusContext>();///////////////////////
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IStudentService, StudentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

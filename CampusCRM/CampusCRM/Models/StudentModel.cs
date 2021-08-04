@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CampusCRM.Models
+namespace CampusCRM.MVC.Models
 {
     public class StudentModel
     {

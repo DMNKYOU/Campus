@@ -1,9 +1,9 @@
-﻿@model StudentModel
+﻿@model CampusCRM.MVC.Models.StudentModel
 @{
-    ViewData["Title"] = "Edit student" + Model.Surname;
+    ViewData["Title"] = Model.Surname != null ? $"Edit student {Model.Surname}" : "Add new student";
 }
 <div class="row">
-    <div class="col-sm-3">Edit @Model.Name @Model.Surname</div>
+    <div class="col-sm-3">@Model.Name @Model.Surname</div>
     <div class="col-sm-6">
         <h2>Edit student</h2>
         @using (Html.BeginForm("Edit", "Students", FormMethod.Post))
