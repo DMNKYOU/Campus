@@ -8,9 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using CampusCRM.Contexts;
-using CampusCRM.Interfaces;
 using CampusCRM.Models;
-using CampusCRM.Repository;
 
 namespace CampusCRM.Controllers
 {

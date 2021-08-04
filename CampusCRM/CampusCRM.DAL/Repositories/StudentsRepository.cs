@@ -1,13 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using CampusCRM.Contexts;
-using CampusCRM.Interfaces;
-using CampusCRM.Models;
+﻿using System;
 
-
-namespace CampusCRM.Repository
+namespace CampusCRM.DAL.Repository
 {
     public class StudentsRepository : IRepository<Student>
     {

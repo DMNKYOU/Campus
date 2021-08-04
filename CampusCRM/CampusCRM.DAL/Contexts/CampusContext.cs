@@ -1,7 +1,7 @@
 ﻿using CampusCRM.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CampusCRM.Contexts
+namespace CampusCRM.DAL.Contexts
 {
     public sealed class CampusContext : DbContext
     {
