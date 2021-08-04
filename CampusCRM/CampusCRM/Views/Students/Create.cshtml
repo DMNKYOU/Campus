@@ -1,4 +1,4 @@
-﻿@model CampusCRM.Models.StudentModel
+﻿@model StudentModel
 @{
     ViewData["Title"] = "Add student";
 }
@@ -9,21 +9,21 @@
         @using (Html.BeginForm("Create", "Students", FormMethod.Post))
         {
             <div class="form-group">
-                <label asp-for="Name"></label><br />
-                <input class="form-control" type="text" asp-for="Name" required />
-                <span asp-validation-for="Name" class="alert-danger"></span>
+                <label asp-for="Name"></label><br/>
+                <input class="form-control" type="text" asp-for="Name" required/>
+                <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Name)</span>
             </div>
             <div class="form-group">
-                <label asp-for="Surname"></label><br />
-                <input class="form-control" type="text" asp-for="Surname" required />
-                <span asp-validation-for="Surname" class="alert-danger"></span>
+                <label asp-for="Surname"></label><br/>
+                <input class="form-control" type="text" asp-for="Surname" required/>
+                <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Surname)</span>
             </div>
             <div class="form-group">
-                <label asp-for="Age"></label><br />
-                <input class="form-control" type="number" asp-for="Age" required />
-                <span asp-validation-for="Age" class="alert-danger"></span>
+                <label asp-for="Age"></label><br/>
+                <input class="form-control" type="number" asp-for="Age" required/>
+                <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Age)</span>
             </div>
-            <button type="submit" class="btn btn-success">Add</button>
+            <button type="submit" class="btn btn-success">Add student</button>
         }
     </div>
     <div class="col-sm-3"></div>
