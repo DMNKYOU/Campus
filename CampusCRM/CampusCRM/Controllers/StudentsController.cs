@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -30,47 +31,66 @@ namespace CampusCRM.Controllers
             return View(studentsVModels);
         }
 
-        //// GET: StudentsController/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: StudentsController/Create
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
 
-        //// POST: StudentsController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        // POST: StudentsController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(StudentModel student)
+        {
+            student.Name = student.Name.Trim();
+            if (!ModelState.IsValid)
+            {
+                Debug.WriteLine($" INFO state = {ModelState.IsValid}");
+                return View(student);
+            }
+            _studentRepository.Create(new Student() {
+                Name = student.Name,
+                Surname = student.Surname,
+                Age = student.Age
+            });
 
-        //// GET: StudentsController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+            return RedirectToAction("Index", "Students");
+        }
 
-        //// POST: StudentsController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        // GET: StudentsController/Edit/5
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var studentDto = _studentRepository.Get(id);
+
+            var student = new StudentModel()
+            {
+                Id = studentDto.Id,
+                Name = studentDto.Name,
+                Surname = studentDto.Surname,
+                Age = studentDto.Age
+            };
+            
+            return View(student);
+        }
+
+        // POST: StudentsController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(StudentModel student)
+        {
+           _studentRepository.Update(new Student()
+           {
+                Id = student.Id,
+                Name = student.Name,
+                Surname = student.Surname,
+                Age = student.Age
+           });
+
+           return RedirectToAction("Index", "Students");
+            
+        }
 
         // GET: StudentsController/Delete/5
         [HttpGet]
