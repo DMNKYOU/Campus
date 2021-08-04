@@ -35,6 +35,7 @@ namespace CampusCRM.Repository
         public void Create(Student item)
         {
             _context.Students.Add(item);
+            _context.SaveChanges();
         }
 
         public void Update(Student item)
