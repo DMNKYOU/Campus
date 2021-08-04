@@ -40,6 +40,7 @@ namespace CampusCRM.Repository
         public void Update(Student item)
         {
             _context.Entry(item).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public void Delete(int id)

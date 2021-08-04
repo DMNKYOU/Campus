@@ -30,7 +30,7 @@ namespace CampusCRM
         {
             services.AddControllersWithViews();
             services.AddDbContext<CampusContext>(options =>
-                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusCRM_DB;Trusted_Connection=True;"));
+                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusCRMDB;Trusted_Connection=True;"));
             services.AddScoped<IRepository<Student>, StudentsRepository>();
         }
 

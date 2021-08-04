@@ -1,5 +1,4 @@
-﻿
-using CampusCRM.Models;
+﻿using CampusCRM.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CampusCRM.Contexts
@@ -10,7 +9,8 @@ namespace CampusCRM.Contexts
 
         public CampusContext()
         {
-            Database.EnsureCreated();
+            //Database.EnsureDeleted();   
+            Database.EnsureCreated();   
         }
         public CampusContext(DbContextOptions<CampusContext> options) : base(options) { }
 
@@ -20,7 +20,7 @@ namespace CampusCRM.Contexts
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusCRM_DB;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusCRMDB;Trusted_Connection=True;");
         }
     }
 }

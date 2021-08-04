@@ -80,14 +80,21 @@ namespace CampusCRM.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(StudentModel student)
         {
-           _studentRepository.Update(new Student()
+            student.Name = student.Name.Trim();
+            if (!ModelState.IsValid)
+            {
+                Debug.WriteLine($" INFO notstate = {ModelState.IsValid}");
+                return View(student);
+            }
+            Debug.WriteLine($" INFO +state = {ModelState.IsValid}");
+            _studentRepository.Update(new Student()
            {
                 Id = student.Id,
                 Name = student.Name,
                 Surname = student.Surname,
                 Age = student.Age
            });
-
+            
            return RedirectToAction("Index", "Students");
             
         }

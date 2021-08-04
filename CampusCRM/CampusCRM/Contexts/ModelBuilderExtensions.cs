@@ -9,21 +9,21 @@ namespace CampusCRM.Contexts
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            var student1 = new Student()
-            {
-                Id = 1,
-                Name = "Petr",
-                Surname = "Petrachko",
-                Age = 21,
-            };
-            var student2 = new Student()
-            {
-                Id = 2,
-                Name = "Dmitriy",
-                Surname = "Muraska",
-                Age = 22,
-            };
-            modelBuilder.Entity<Group>().HasData(student1, student2);
+            //var student1 = new Student()
+            //{
+            //    Id = 1,
+            //    Name = "Petr",
+            //    Surname = "Petrachko",
+            //    Age = 21,
+            //};
+            //var student2 = new Student()
+            //{
+            //    Id = 2,
+            //    Name = "Dmitriy",
+            //    Surname = "Muraska",
+            //    Age = 22,
+            //};
+            //modelBuilder.Entity<Group>().HasData(student1, student2);
 
         }
     }
