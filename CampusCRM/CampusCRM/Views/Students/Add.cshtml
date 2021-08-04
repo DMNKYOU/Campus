@@ -1,15 +1,13 @@
-﻿@model StudentModel
+﻿@model CampusCRM.Models.StudentModel
 @{
-    ViewData["Title"] = "Edit student" + Model.Surname;
+    ViewData["Title"] = "Add student";
 }
 <div class="row">
-    <div class="col-sm-3">Edit @Model.Name @Model.Surname</div>
+    <div class="col-sm-3"></div>
     <div class="col-sm-6">
-        <h2>Edit student</h2>
-        @using (Html.BeginForm("Edit", "Students", FormMethod.Post))
+        <h2>Add student</h2>
+        @using (Html.BeginForm("Add", "Students", FormMethod.Post))
         {
-            @Html.HiddenFor(x => x.Id)
-
             <div class="form-group">
                 <label asp-for="Name"></label><br />
                 <input class="form-control" type="text" asp-for="Name" required />
@@ -25,7 +23,7 @@
                 <input class="form-control" type="number" asp-for="Age" required />
                 <span asp-validation-for="Age" class="alert-danger"></span>
             </div>
-            <button type="submit" class="btn btn-success">Edit student</button>
+            <button type="submit" class="btn btn-success">Add</button>
         }
     </div>
     <div class="col-sm-3"></div>

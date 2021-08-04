@@ -1,26 +1,30 @@
-﻿@model IEnumerable<StudentModel>
+﻿@model List<StudentModel>
 @{
     ViewData["Title"] = "Students";
-
 }
-<h1>Students</h1>
-
-<table class="table table-bordered">
-
+<table class="table text-center table-striped">
+    <thead class="bg-info">
     <tr>
-        <th>Name</th>
-        <th>Group</th>
+        <th scope="col" class="text-light">Name</th>
+        <th scope="col" class="text-light">Surname</th>
+        <th scope="col" class="text-light">Age</th>
+        <th scope="col" class="text-light"></th>
     </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
 
-    @foreach (var student in Model.OrderBy(s => s.Surname))
-    {
-        <tr>
-            <td><a asp-controller="Students" asp-action="Edit" asp-route-id="@student.Id">@student.Surname @student.Name</a></td>
-            <td><a asp-controller="StudentGroups" asp-action="Edit" asp-route-id="@student.GroupId">@student.Group.Title</a> (<i>@student.Group.Status</i>)</td>
-        </tr>
-    }
-
-    <tr>
-        <th><div class="text-info">Total: @Model.Count()</div></th>
-    </tr>
+            <tr>
+                <th scope="col">@student.Name</th>
+                <th scope="col">@student.Surname</th>
+                <th scope="col">@student.Age</th>
+                <th scope="col">
+                    <a class="btn btn-success" asp-controller="Students" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
+                    <a class="btn btn-danger" asp-controller="Students" asp-action="Delete" asp-route-id="@student.Id">Delete</a>
+                </th>
+            </tr>
+        }
+    </tbody>
 </table>
+<a class="btn btn-primary" asp-controller="Students" asp-action="Add">Add new student</a>

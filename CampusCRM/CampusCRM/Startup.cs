@@ -8,6 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CampusCRM.Contexts;
+using CampusCRM.Interfaces;
+using CampusCRM.Models;
+using CampusCRM.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace CampusCRM
 {
@@ -24,6 +29,9 @@ namespace CampusCRM
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<CampusContext>(options =>
+                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusCRM_DB;Trusted_Connection=True;"));
+            services.AddScoped<IRepository<Student>, StudentsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
