@@ -1,6 +1,6 @@
 using System;
 
-namespace CampusCRM.Models
+namespace CampusCRM.MVC.Models
 {
     public class ErrorViewModel
     {

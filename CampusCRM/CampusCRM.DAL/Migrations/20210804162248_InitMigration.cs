@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CampusCRM.Migrations
+
+namespace CampusCRM.DAL.Migrations
 {
     public partial class InitMigration : Migration
     {

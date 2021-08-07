@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Text.RegularExpressions;
-using CampusCRM.Models;
+using CampusCRM.DAL.Entities;
 
-namespace CampusCRM.Contexts
+namespace CampusCRM.DAL.Contexts
 {
     public static class ModelBuilderExtensions
     {

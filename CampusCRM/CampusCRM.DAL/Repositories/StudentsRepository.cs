@@ -1,13 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CampusCRM.Contexts;
-using CampusCRM.Interfaces;
-using CampusCRM.Models;
+using CampusCRM.DAL.Contexts;
+using CampusCRM.DAL.Entities;
+using CampusCRM.DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
-
-namespace CampusCRM.Repository
+namespace CampusCRM.DAL.Repositories
 {
     public class StudentsRepository : IRepository<Student>
     {
@@ -15,8 +14,9 @@ namespace CampusCRM.Repository
 
         public StudentsRepository(CampusContext context)
         {
-            _context=context;
+            _context = context;
         }
+
         public IEnumerable<Student> GetAll()
         {
             return _context.Students;
@@ -29,7 +29,7 @@ namespace CampusCRM.Repository
 
         public IEnumerable<Student> Find(Func<Student, bool> predicate)
         {
-            return _context.Students.Where(predicate).ToList();
+            return _context.Students.AsNoTracking().AsEnumerable().Where(predicate).ToList(); /////////////////////
         }
 
         public void Create(Student item)
@@ -40,7 +40,6 @@ namespace CampusCRM.Repository
         public void Update(Student item)
         {
             _context.Entry(item).State = EntityState.Modified;
-            _context.SaveChanges();
         }
 
         public void Delete(int id)
