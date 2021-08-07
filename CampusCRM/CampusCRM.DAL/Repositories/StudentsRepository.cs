@@ -29,7 +29,7 @@ namespace CampusCRM.DAL.Repositories
 
         public IEnumerable<Student> Find(Func<Student, bool> predicate)
         {
-            return _context.Students.Where(predicate).ToList();
+            return _context.Students.AsNoTracking().AsEnumerable().Where(predicate).ToList(); /////////////////////
         }
 
         public void Create(Student item)
