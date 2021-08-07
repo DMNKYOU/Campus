@@ -11,12 +11,38 @@ namespace CampusCRM.DAL
 
         private StudentsRepository _studentsRepository;
 
+        private GroupRepository _groupsRepository;
+
+        private TeacherRepository _teachersRepository;
+
         private bool _dispose = false;
 
         public UnitOfWork(CampusContext context)
         {
             //_context = new CampusContext();
             _context = context;
+        }
+
+        public IRepository<Teacher> Teachers
+        {
+            get
+            {
+                if (_teachersRepository == null)
+                    _teachersRepository = new TeacherRepository(_context);
+
+                return _teachersRepository;
+            }
+        }
+
+        public IRepository<Group> Groups
+        {
+            get
+            {
+                if (_groupsRepository == null)
+                    _groupsRepository = new GroupRepository(_context);
+
+                return _groupsRepository;
+            }
         }
 
         public IRepository<Student> Students
@@ -29,7 +55,6 @@ namespace CampusCRM.DAL
                 return _studentsRepository;
             }
         }
-
         public void Save()
         {
             _context.SaveChanges();
