@@ -46,10 +46,13 @@ namespace CampusCRM.DAL.Repositories
         public void Delete(int id)
         {
             var teacher = _context.Teachers.Find(id);
-            if (teacher != null)
+            if (teacher != null){
                 _context.Teachers.Remove(teacher);
-            else
+            }
+            else{
                 throw new ArgumentException("Teacher not found");
+
+            }
         }
     }
 }

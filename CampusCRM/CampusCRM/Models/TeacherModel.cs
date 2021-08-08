@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace CampusCRM.DAL.Entities
+namespace CampusCRM.MVC.Models
 {
-    public class Student
+    public class TeacherModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }
-        public int GroupId { get; set; }
-        public Group Group { get; set; }
+        public string Info { get; set; }
+
+        public List<GroupModel> Groups = new List<GroupModel>();
     }
 }

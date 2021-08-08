@@ -13,7 +13,7 @@ namespace CampusCRM.DAL.Contexts
 
         public CampusContext()
         {
-            //Database.EnsureDeleted();   
+            Database.EnsureDeleted();   
             Database.EnsureCreated();   
         }
         public CampusContext(DbContextOptions<CampusContext> options) : base(options) { }
@@ -21,6 +21,7 @@ namespace CampusCRM.DAL.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Seed();
+            
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

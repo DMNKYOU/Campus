@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace CampusCRM.DAL.Entities
+namespace CampusCRM.BLL.ModelsDTO
 {
-    public class Teacher
+    public class TeacherDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -10,6 +10,6 @@ namespace CampusCRM.DAL.Entities
         public int Age { get; set; }
         public string Info { get; set; }
 
-        public List<Group> Groups = new List<Group>();
+        public List<GroupDTO> Groups = new List<GroupDTO>();
     }
 }

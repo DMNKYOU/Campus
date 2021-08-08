@@ -4,14 +4,16 @@ using CampusCRM.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CampusCRM.DAL.Migrations
 {
     [DbContext(typeof(CampusContext))]
-    partial class CampusContextModelSnapshot : ModelSnapshot
+    [Migration("20210807200442_GroupsTeachersMigration")]
+    partial class GroupsTeachersMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

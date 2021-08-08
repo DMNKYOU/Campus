@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CampusCRM.DAL.Entities
+namespace CampusCRM.BLL.ModelsDTO
 {
-    public class Group
+    public class GroupDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
 
-        public List<Student> Students { get; set; } = new List<Student>();
+        public List<StudentDTO> Students { get; set; } = new List<StudentDTO>();
         public int TeacherId { get; set; }
-        public Teacher Teacher { get; set; }
-        
+        public TeacherDTO Teacher { get; set; }
+      
     }
 }

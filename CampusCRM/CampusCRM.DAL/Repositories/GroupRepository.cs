@@ -10,43 +10,47 @@ namespace CampusCRM.DAL.Repositories
 {
     public class GroupRepository : IRepository<Group>
     {
-        private readonly CampusContext db;
-        public GroupRepository(CampusContext db)
-        {
-            this.db = db;
+        private readonly CampusContext _context;
+        public GroupRepository(CampusContext context)
+        { 
+            _context = context;
         }
         public IEnumerable<Group> GetAll()
         {
-            return db.Groups.Include(g => g.Teacher).ToList();
+            return _context.Groups.Include(g => g.Teacher).ToList();
         }
 
         public Group Get(int id)
         {
-            return db.Groups.Find(id);
+            return _context.Groups.Find(id);
         }
 
         public IEnumerable<Group> Find(Func<Group, bool> predicate)
         {
-            return db.Groups.Where(predicate).ToList();
+            return _context.Groups.Where(predicate).ToList();
         }
 
         public void Create(Group item)
         {
-            db.Groups.Add(item);
+            _context.Groups.Add(item);
         }
 
         public void Update(Group item)
         {
-            db.Entry(item).State = EntityState.Modified;
+            _context.Entry(item).State = EntityState.Modified;
         }
 
         public void Delete(int id)
         {
-            var group = db.Groups.Find(id);
-            if (group != null)
-                db.Groups.Remove(group);
-            else
+            var group = _context.Groups.Find(id);
+
+            if (group != null){
+                _context.Groups.Remove(group);
+            }
+            else{
                 throw new ArgumentException("Group not found");
+            }
+
         }
     }
 }

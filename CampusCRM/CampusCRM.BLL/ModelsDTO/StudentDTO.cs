@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CampusCRM.BLL.ModelsDTO
+﻿namespace CampusCRM.BLL.ModelsDTO
 {
     public class StudentDTO
     {
@@ -12,5 +6,7 @@ namespace CampusCRM.BLL.ModelsDTO
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }
+        public int GroupId { get; set; }
+        public GroupDTO Group { get; set; }
     }
 }
