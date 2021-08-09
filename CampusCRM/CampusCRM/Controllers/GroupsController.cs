@@ -38,12 +38,22 @@ namespace CampusCRM.MVC.Controllers
 
             ViewData["Action"] = "Add";
 
-            return View("Edit");
+            return View("Edit", new GroupModel());
         }
 
         [HttpPost]
         public IActionResult Add(GroupModel group)
         {
+            group.Name = group.Name.Trim();
+            if (!ModelState.IsValid)
+            {
+                //Debug.WriteLine($" From {ModelState.IsValid} { ModelState.Count}");
+                var teachers = _teacherService.GetAll();
+                ViewData["Teachers"] = _mapper.Map<List<TeacherModel>>(teachers);
+
+                ViewData["Action"] = "Add";
+                return View("Edit", group);
+            }
             _groupService.Add(_mapper.Map<GroupDTO>(group));
 
             return RedirectToAction("Index", "Groups");
@@ -63,6 +73,16 @@ namespace CampusCRM.MVC.Controllers
         [HttpPost]
         public IActionResult Edit(GroupModel group)
         {
+            group.Name = group.Name.Trim();
+            if (!ModelState.IsValid)
+            {
+                //Debug.WriteLine($" From {ModelState.IsValid} { ModelState.Count}");
+                var teachers = _teacherService.GetAll();
+                ViewData["Teachers"] = _mapper.Map<List<TeacherModel>>(teachers);
+                ViewData["Action"] = "Edit";
+
+                return View("Edit", group);
+            }
             _groupService.Edit(_mapper.Map<GroupDTO>(group));
 
             return RedirectToAction("Index", "Groups");
