@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Text.RegularExpressions;
 using CampusCRM.DAL.Entities;
+using Group = CampusCRM.DAL.Entities.Group;
 
 namespace CampusCRM.DAL.Contexts
 {
@@ -9,21 +9,58 @@ namespace CampusCRM.DAL.Contexts
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            //var student1 = new Student()
-            //{
-            //    Id = 1,
-            //    Name = "Petr",
-            //    Surname = "Petrachko",
-            //    Age = 21,
-            //};
-            //var student2 = new Student()
-            //{
-            //    Id = 2,
-            //    Name = "Dmitriy",
-            //    Surname = "Muraska",
-            //    Age = 22,
-            //};
-            //modelBuilder.Entity<Group>().HasData(student1, student2);
+            var teacher1 = new Teacher()
+            {
+                Id = 10,
+                Name = "Alisa",
+                Surname = "Kolisnekach",
+                Age = 48,
+                Info = "Middle+ developer, play tennis and read fiction",
+            };
+            var teacher2 = new Teacher()
+            {
+                Id = 11,
+                Name = "Vlad",
+                Surname = "Losher",
+                Age = 34,
+                Info = "I like cooking or baking and creating new projects in educational sphere",
+            };
+            modelBuilder.Entity<Teacher>().HasData(teacher1, teacher2);
+
+            var group1 = new Group()
+            {
+                Id = 10,
+                Name = "IOS",
+                StartDate = DateTime.Parse("09.09.2021"),
+                TeacherId = teacher1.Id,
+            };
+            var group2 = new Group()
+            {
+                Id = 11,
+                Name = "Front-end",
+                StartDate = DateTime.Parse("31.10.2021"),
+                TeacherId = teacher2.Id,
+            };
+            modelBuilder.Entity<Group>().HasData(group1, group2);
+
+            modelBuilder.Entity<Student>().HasData(
+                new Student
+                {
+                    Id = 10,
+                    Name = "Dmitriy",
+                    Surname = "Murashka",
+                    Age = 21,
+                    GroupId = group1.Id
+                },
+                new Student()
+                {
+                    Id = 11,
+                    Name = "Tanya",
+                    Surname = "Petrachko",
+                    Age = 22,
+                    GroupId = group1.Id
+                }
+            );
 
         }
     }

@@ -6,13 +6,13 @@ using CampusCRM.DAL.Entities;
 
 namespace CampusCRM.BLL.Interfaces
 {
-    public interface IStudentService
+    public interface IStudentService: IEntityService<StudentDTO>
     {
-        void AddStudent(StudentDTO studentDto);
-        void EditStudent(StudentDTO studentDto);
-        void DeleteStudent(int id);
-        StudentDTO GetStudent(int id);
-        IEnumerable<StudentDTO> GetStudents();
-        void Dispose();
+        //void AddStudent(StudentDTO studentDto);
+        //void EditStudent(StudentDTO studentDto);
+        //void DeleteStudent(int id);
+        //StudentDTO GetStudent(int id);
+        //IEnumerable<StudentDTO> GetStudents();
+        //void Dispose();
     }
 }

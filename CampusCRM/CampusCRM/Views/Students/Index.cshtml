@@ -8,6 +8,7 @@
         <th scope="col" class="text-light">Name</th>
         <th scope="col" class="text-light">Surname</th>
         <th scope="col" class="text-light">Age</th>
+        <th scope="col" class="text-light">Group</th>
         <th scope="col" class="text-light"></th>
     </tr>
     </thead>
@@ -15,16 +16,17 @@
         @foreach (var student in Model)
         {
 
-            <tr>
-                <th scope="col">@student.Name</th>
-                <th scope="col">@student.Surname</th>
-                <th scope="col">@student.Age</th>
-                <th scope="col">
-                    <a class="btn btn-success" asp-controller="Students" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
-                    <a class="btn btn-danger" asp-controller="Students" asp-action="Delete" asp-route-id="@student.Id">Delete</a>
-                </th>
-            </tr>
+        <tr>
+            <th scope="col">@student.Name</th>
+            <th scope="col">@student.Surname</th>
+            <th scope="col">@student.Age</th>
+            <th scope="col">@student.Group.Name</th>
+            <th scope="col">
+                <a class="btn btn-success" asp-controller="Students" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
+                <a class="btn btn-danger" asp-controller="Students" asp-action="Delete" asp-route-id="@student.Id">Delete</a>
+            </th>
+        </tr>
         }
     </tbody>
 </table>
-<a class="btn btn-primary" asp-controller="Students" asp-action="Create">Add new student</a>
+<a class="btn btn-primary" asp-controller="Students" asp-action="Add">Add new student</a>

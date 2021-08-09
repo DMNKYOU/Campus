@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace CampusCRM.DAL.Entities
 {
-    public class Student
+    public class Teacher
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }
-        public int GroupId { get; set; }
-        public Group Group { get; set; }
+        public string Info { get; set; }
+
+        public List<Group> Groups = new List<Group>();
     }
 }

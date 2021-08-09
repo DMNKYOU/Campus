@@ -1,0 +1,54 @@
+﻿@using CampusCRM.MVC
+@model GroupModel
+@{
+    var action = ViewData["Action"];
+    ViewData["Title"] = $"{action} group";
+}
+<div class="content">
+    <h1 class="content__header">@action group</h1>
+    <div class="containt-fluid">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                @using (Html.BeginForm($"{action}", "Groups", FormMethod.Post))
+                {
+                    @Html.HiddenFor(x => x.Id)
+
+                    <div class="mb-3 row">
+                        <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" asp-for="Name" required />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="StartDate" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="date" asp-for="StartDate" required />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label asp-for="TeacherId" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <select class="form-control" asp-for="TeacherId" required>
+                                @foreach (var teacher in (List<TeacherModel>)ViewData["Teachers"])
+                                {
+
+                                    if (Model != null && teacher.Id == Model.TeacherId)
+                                    {
+                                        <option value="@teacher.Id" selected>@teacher.Name @teacher.Surname</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@teacher.Id">@teacher.Name @teacher.Surname</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">@action group</button>
+                }
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+</div>

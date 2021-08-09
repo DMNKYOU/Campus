@@ -8,10 +8,12 @@ namespace CampusCRM.DAL.Contexts
     public sealed class CampusContext : DbContext
     {
         public DbSet<Student> Students { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
 
         public CampusContext()
         {
-            //Database.EnsureDeleted();   
+            Database.EnsureDeleted();   
             Database.EnsureCreated();   
         }
         public CampusContext(DbContextOptions<CampusContext> options) : base(options) { }

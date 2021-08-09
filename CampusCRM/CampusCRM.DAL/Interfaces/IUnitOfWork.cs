@@ -8,6 +8,8 @@ namespace CampusCRM.DAL.Interfaces
     public interface IUnitOfWork
     {
         IRepository<Student> Students { get; }
+        IRepository<Group> Groups { get; }
+        IRepository<Teacher> Teachers { get; }
         void Save();
         void Dispose();
     }

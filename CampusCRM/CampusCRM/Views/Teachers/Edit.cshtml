@@ -1,64 +1,50 @@
 ﻿@using CampusCRM.MVC.Models
 
-@model StudentModel
+@model TeacherModel
 
 @{
     var action = ViewData["Action"];
-    ViewData["Title"] = $"{action} student";
+    ViewData["Title"] = $"{action} teacher";
 }
 <div class="content">
-    <h1 class="content__header">@action student</h1>
+    <h1 class="content__header">@action teacher</h1>
     <div class="containt-fluid">
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-                @using (Html.BeginForm($"{action}", "Students", FormMethod.Post))
+                @using (Html.BeginForm($"{action}", "Teachers", FormMethod.Post))
                 {
                     @Html.HiddenFor(x => x.Id)
 
                     <div class="mb-3 row">
                         <label asp-for="Name" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input class="form-control" type="text" asp-for="Name" required/>
+                            <input class="form-control" type="text" asp-for="Name" required />
                             <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Name)</span>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label asp-for="Surname" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input class="form-control" type="text" asp-for="Surname" required/>
+                            <input class="form-control" type="text" asp-for="Surname" required />
                             <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Surname)</span>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label asp-for="Age" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input class="form-control" type="text" asp-for="Age" required/>
+                            <input class="form-control" type="text" asp-for="Age" required />
                             <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Age)</span>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label asp-for="GroupId" class="col-sm-3 col-form-label"></label>
+                        <label asp-for="Info" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <select class="form-control" asp-for="GroupId" required>
-                                @if (ViewBag.Groups != null)
-                                {
-                                    foreach (var group in (List<GroupModel>)ViewBag.Groups)
-                                    {
-                                        if (Model != null && group.Id == Model.GroupId)
-                                        {
-                                            <option value="@group.Id" selected>@group.Name</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@group.Id">@group.Name</option>
-                                        }
-                                    }
-                                }
-                            </select>
+                            <input class="form-control" type="text" asp-for="Info" required />
+                            <span class="alert-danger"> @Html.ValidationMessageFor(model => model.Info)</span>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success">@action student</button>
+                    <button type="submit" class="btn btn-success">@action teacher</button>
                 }
             </div>
             <div class="col-sm-4"></div>

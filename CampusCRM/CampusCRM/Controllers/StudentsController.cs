@@ -1,94 +1,105 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Diagnostics;
-using AutoMapper;
-using CampusCRM.MVC.Models;
 using CampusCRM.BLL.Interfaces;
 using CampusCRM.BLL.ModelsDTO;
+using CampusCRM.DAL.Entities;
+using CampusCRM.MVC.Models;
 
-
-namespace CampusCRM.MVC.Controllers
+namespace TrainingCenterCRM.Controllers
 {
     public class StudentsController : Controller
     {
         private readonly IStudentService _studentService;
 
-        private readonly IMapper _mapper;
-        public StudentsController(IMapper mapper, IStudentService studentService)
-        {
-            _mapper = mapper;
+        private readonly IGroupService _groupService;
 
-            _studentService = studentService;
+        private readonly IMapper _mapper;
+        public StudentsController(IMapper _mapper, IGroupService _groupService, IStudentService _studentService)
+        {
+            this._mapper = _mapper;
+
+            this._studentService = _studentService;
+            this._groupService = _groupService;
         }
 
         // GET: StudentsController
-        public ActionResult Index()
+        public IActionResult Index()
         {
-            var students = _studentService.GetStudents();
-            var studentsVModels = _mapper.Map<IEnumerable<StudentDTO>, List<StudentModel>>(students);
+            var students = _studentService.GetAll();
+            var studentsDto = _mapper.Map<IEnumerable<StudentDTO>, List<StudentModel>>(students);
 
-            return View(studentsVModels);
+            return View(studentsDto);
         }
 
-        // GET: StudentsController/Create
+        // GET: StudentsController/Add
         [HttpGet]
-        public ActionResult Create()
+        public IActionResult Add()
         {
-            return View("Edit");
+            var groups = _groupService.GetAll();
+            ViewBag.Groups = _mapper.Map<IEnumerable<GroupDTO>, List<GroupModel>>(groups);
+            ViewData["Action"] = "Add";
+
+            return View("Edit", new StudentModel());
         }
 
-        // POST: StudentsController/Create
+        // POST: StudentsController/Add
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(StudentModel student)
+        public IActionResult Add(StudentModel student)
         {
             student.Name = student.Name.Trim();
+            student.Surname = student.Surname.Trim();
             if (!ModelState.IsValid)
             {
-                Debug.WriteLine($" INFO state = {ModelState.IsValid}");
-                return View(student);
+                Debug.WriteLine($" From {ModelState.IsValid} { ModelState.Count}");
+                var groups = _groupService.GetAll();
+                ViewBag.Groups = _mapper.Map<IEnumerable<GroupDTO>, List<GroupModel>>(groups);
+                ViewData["Action"] = "Add";
+                return View("Edit",student);
             }
+            _studentService.Add(_mapper.Map<StudentDTO>(student));
 
-            _studentService.AddStudent(_mapper.Map<StudentDTO>(student));
-
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Students");
         }
 
         // GET: StudentsController/Edit/5
         [HttpGet]
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
-            var student = _studentService.GetStudent(id);
+            var student = _studentService.GetById(id);
+            var groups = _groupService.GetAll();
+            ViewBag.Groups = _mapper.Map<IEnumerable<GroupDTO>, List<GroupModel>>(groups);
+            ViewData["Action"] = "Edit";
 
             return View(_mapper.Map<StudentModel>(student));
-
         }
 
-        // POST: StudentsController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(StudentModel student)
+        public IActionResult Edit(StudentModel student)
         {
             student.Name = student.Name.Trim();
+            student.Surname = student.Surname.Trim();
             if (!ModelState.IsValid)
             {
-                Debug.WriteLine($" INFO notstate = {ModelState.IsValid}");
+                //Debug.WriteLine($" From {ModelState.IsValid} { ModelState.Count}");
+                var groups = _groupService.GetAll();
+                ViewBag.Groups = _mapper.Map<IEnumerable<GroupDTO>, List<GroupModel>>(groups);
+                ViewData["Action"] = "Edit";
                 return View(student);
             }
-            //Debug.WriteLine($" INFO +state = {ModelState.IsValid}");
-            _studentService.EditStudent(_mapper.Map<StudentDTO>(student));
+            _studentService.Edit(_mapper.Map<StudentDTO>(student));
 
-            return RedirectToAction("Index");
-            
+            return RedirectToAction("Index", "Students");
         }
 
-        // GET: StudentsController/Delete/5
         [HttpGet]
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _studentService.DeleteStudent(id);
-
-            return RedirectToAction("Index");
+            _studentService.Delete(id);
+            return RedirectToAction("Index", "Students");
         }
     }
 }
