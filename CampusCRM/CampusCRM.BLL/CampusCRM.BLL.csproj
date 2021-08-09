@@ -12,8 +12,4 @@
     <ProjectReference Include="..\CampusCRM.DAL\CampusCRM.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="BusinessModels\" />
-  </ItemGroup>
-
 </Project>

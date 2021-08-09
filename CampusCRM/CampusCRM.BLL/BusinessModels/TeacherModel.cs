@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CampusCRM.MVC.Models
 {
-    public class StudentModel
+    public class TeacherModel
     {
         [Required]
         public int Id { get; set; }
@@ -24,16 +24,14 @@ namespace CampusCRM.MVC.Models
         public string Surname { get; set; }
 
         [Required]
-        [RegularExpression(@"^(?:100|1[5-9]|[2-9][0-9])$", ErrorMessage = "Your age should be 15-100")]
+        [RegularExpression(@"^(?:100|[2-9][0-9])$", ErrorMessage = "Your age should be 20-100")]
         public int Age { get; set; }
-        /// <summary>
-        /// /////////////////
-        /// </summary>
-        [Display(Name = "Group")]
-        public int GroupId { get; set; }
-        /// <summary>
-        /// //////////////////
-        /// </summary>
-        public GroupModel Group { get; set; }
+
+        [Required]
+        [StringLength(100, MinimumLength = 2)]
+        [Display(Name = "Info", Prompt = "Some words about you")]
+        public string Info { get; set; }
+
+        public List<GroupModel> Groups = new List<GroupModel>();
     }
 }

@@ -20,7 +20,7 @@ namespace CampusCRM.BLL.Services
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        public void AddStudent(StudentDTO studentDto)
+        public void Add(StudentDTO studentDto)
         {
             if (studentDto == null)
                 throw new ArgumentException();
@@ -30,7 +30,7 @@ namespace CampusCRM.BLL.Services
             _unitOfWork.Students.Create(student);
             _unitOfWork.Save();
         }
-        public void EditStudent(StudentDTO studentDto)
+        public void Edit(StudentDTO studentDto)
         {
             if (studentDto == null)
                 throw new ArgumentException();
@@ -40,18 +40,18 @@ namespace CampusCRM.BLL.Services
             _unitOfWork.Students.Update(student);
             _unitOfWork.Save();
         }
-        public void DeleteStudent(int id)
+        public void Delete(int id)
         {
             _unitOfWork.Students.Delete(id);
             _unitOfWork.Save();
         }
-        public StudentDTO GetStudent(int id)
+        public StudentDTO GetById(int id)
         {
             var student = _unitOfWork.Students.Get(id);
 
             return _mapper.Map<StudentDTO>(student);
         }
-        public IEnumerable<StudentDTO> GetStudents() /////DTO var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Student, StudentDTO>()).CreateMapper();
+        public IEnumerable<StudentDTO> GetAll() /////DTO var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Student, StudentDTO>()).CreateMapper();
         {
             var students = _unitOfWork.Students.GetAll();
             return _mapper.Map<IEnumerable<Student>, IEnumerable<StudentDTO>>(students);

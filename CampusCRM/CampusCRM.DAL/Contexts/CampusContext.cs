@@ -21,7 +21,6 @@ namespace CampusCRM.DAL.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Seed();
-            
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

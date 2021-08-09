@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using CampusCRM.DAL.Contexts;
 using CampusCRM.DAL.Entities;
@@ -19,7 +20,7 @@ namespace CampusCRM.DAL.Repositories
 
         public IEnumerable<Student> GetAll()
         {
-            return _context.Students;
+            return _context.Students.Include(u => u.Group); 
         }
 
         public Student Get(int id)

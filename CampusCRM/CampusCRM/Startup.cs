@@ -44,6 +44,8 @@ namespace CampusCRM.MVC
             services.AddDbContext<CampusContext>();///////////////////////
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<ITeacherService, TeacherService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

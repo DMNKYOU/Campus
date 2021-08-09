@@ -11,7 +11,7 @@ namespace CampusCRM.DAL.Contexts
         {
             var teacher1 = new Teacher()
             {
-                Id = 1,
+                Id = 10,
                 Name = "Alisa",
                 Surname = "Kolisnekach",
                 Age = 48,
@@ -19,7 +19,7 @@ namespace CampusCRM.DAL.Contexts
             };
             var teacher2 = new Teacher()
             {
-                Id = 2,
+                Id = 11,
                 Name = "Vlad",
                 Surname = "Losher",
                 Age = 34,
@@ -29,14 +29,14 @@ namespace CampusCRM.DAL.Contexts
 
             var group1 = new Group()
             {
-                Id = 1,
+                Id = 10,
                 Name = "IOS",
                 StartDate = DateTime.Parse("09.09.2021"),
                 TeacherId = teacher1.Id,
             };
             var group2 = new Group()
             {
-                Id = 2,
+                Id = 11,
                 Name = "Front-end",
                 StartDate = DateTime.Parse("31.10.2021"),
                 TeacherId = teacher2.Id,
@@ -46,7 +46,7 @@ namespace CampusCRM.DAL.Contexts
             modelBuilder.Entity<Student>().HasData(
                 new Student
                 {
-                    Id = 5,
+                    Id = 10,
                     Name = "Dmitriy",
                     Surname = "Murashka",
                     Age = 21,
@@ -54,7 +54,7 @@ namespace CampusCRM.DAL.Contexts
                 },
                 new Student()
                 {
-                    Id = 6,
+                    Id = 11,
                     Name = "Tanya",
                     Surname = "Petrachko",
                     Age = 22,

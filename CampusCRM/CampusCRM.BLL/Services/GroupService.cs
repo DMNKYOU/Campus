@@ -20,7 +20,7 @@ namespace CampusCRM.BLL.Services
             _mapper = mapper;
             _studentService = studentService;
         }
-        public void AddGroup(GroupDTO groupDto)
+        public void Add(GroupDTO groupDto)
         {
             if (groupDto == null)
                 throw new ArgumentException();
@@ -31,14 +31,7 @@ namespace CampusCRM.BLL.Services
             _unitOfWork.Save();
         }
 
-        public void DeleteGroup(int id)
-        {
-            _unitOfWork.Groups.Delete(id);
-            _unitOfWork.Save();
-        }
-
-
-        public void EditGroup(GroupDTO groupDto)
+        public void Edit(GroupDTO groupDto)
         {
             if (groupDto == null)
                 throw new ArgumentException();
@@ -49,17 +42,22 @@ namespace CampusCRM.BLL.Services
             _unitOfWork.Save();
         }
 
-        public GroupDTO GetGroup(int id)
+        public GroupDTO GetById(int id)
         {
             var group = _unitOfWork.Groups.Get(id);
 
             return _mapper.Map<GroupDTO>(group);
         }
 
-        public IEnumerable<GroupDTO> GetGroups()
+        public IEnumerable<GroupDTO> GetAll()
         {
             var groups = _unitOfWork.Groups.GetAll();
             return _mapper.Map<IEnumerable<Group>, IEnumerable<GroupDTO>>(groups);
+        }
+        public void Delete(int id)
+        {
+            _unitOfWork.Groups.Delete(id);
+            _unitOfWork.Save();
         }
         public void Dispose()
         {

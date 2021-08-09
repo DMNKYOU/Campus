@@ -4,14 +4,16 @@ using CampusCRM.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CampusCRM.DAL.Migrations
 {
     [DbContext(typeof(CampusContext))]
-    partial class CampusContextModelSnapshot : ModelSnapshot
+    [Migration("20210808213130_ChgeFilInfo")]
+    partial class ChgeFilInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,22 +42,6 @@ namespace CampusCRM.DAL.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Groups");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 10,
-                            Name = "IOS",
-                            StartDate = new DateTime(2021, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TeacherId = 10
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Front-end",
-                            StartDate = new DateTime(2021, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TeacherId = 11
-                        });
                 });
 
             modelBuilder.Entity("CampusCRM.DAL.Entities.Student", b =>
@@ -82,24 +68,6 @@ namespace CampusCRM.DAL.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("Students");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 10,
-                            Age = 21,
-                            GroupId = 10,
-                            Name = "Dmitriy",
-                            Surname = "Murashka"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Age = 22,
-                            GroupId = 10,
-                            Name = "Tanya",
-                            Surname = "Petrachko"
-                        });
                 });
 
             modelBuilder.Entity("CampusCRM.DAL.Entities.Teacher", b =>
@@ -124,24 +92,6 @@ namespace CampusCRM.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Teachers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 10,
-                            Age = 48,
-                            Info = "Middle+ developer, play tennis and read fiction",
-                            Name = "Alisa",
-                            Surname = "Kolisnekach"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Age = 34,
-                            Info = "I like cooking or baking and creating new projects in educational sphere",
-                            Name = "Vlad",
-                            Surname = "Losher"
-                        });
                 });
 
             modelBuilder.Entity("CampusCRM.DAL.Entities.Group", b =>
