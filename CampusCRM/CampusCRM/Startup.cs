@@ -15,6 +15,7 @@ using CampusCRM.DAL;
 using CampusCRM.DAL.Contexts;
 using CampusCRM.DAL.Interfaces;
 using CampusCRM.MVC.Mappings;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CampusCRM.MVC
@@ -38,10 +39,14 @@ namespace CampusCRM.MVC
             });
 
             IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);///////////////////////////////
+            services.AddSingleton(mapper);
 
             services.AddControllersWithViews();
-            services.AddDbContext<CampusContext>();///////////////////////
+
+            services.AddDbContext<CampusContext>();
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<CampusContext>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IGroupService, GroupService>();
@@ -66,6 +71,7 @@ namespace CampusCRM.MVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -73,6 +79,7 @@ namespace CampusCRM.MVC
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

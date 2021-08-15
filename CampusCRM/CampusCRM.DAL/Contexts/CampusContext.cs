@@ -1,11 +1,10 @@
-﻿
-using CampusCRM.DAL.Entities;
-
+﻿using CampusCRM.DAL.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CampusCRM.DAL.Contexts
 {
-    public sealed class CampusContext : DbContext
+    public sealed class CampusContext : IdentityDbContext
     {
         public DbSet<Student> Students { get; set; }
         public DbSet<Group> Groups { get; set; }
@@ -20,6 +19,7 @@ namespace CampusCRM.DAL.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Seed();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
