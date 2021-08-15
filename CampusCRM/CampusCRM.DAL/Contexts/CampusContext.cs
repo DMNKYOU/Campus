@@ -31,7 +31,7 @@ namespace CampusCRM.DAL.Contexts
             //    .AddJsonFile("appsettings.json")
             //    .Build();
             // optionsBuilder.UseSqlServer(configuration.GetConnectionString("CampusConnectionStringDB"));
-            //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusCRMDB;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusCRMDB;Trusted_Connection=True;");
         }
     }
 }

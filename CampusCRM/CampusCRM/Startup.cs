@@ -18,6 +18,7 @@ using CampusCRM.MVC.Mappings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CampusCRM.Mail;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CampusCRM.MVC
 {
@@ -48,9 +49,21 @@ namespace CampusCRM.MVC
             services.AddDbContext<CampusContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("CampusConnectionStringDB")));
-
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //    .AddEntityFrameworkStores<CampusContext>();
+
+            services.AddDefaultIdentity<IdentityUser>(
+                    options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<CampusContext>();
+
+            services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IStudentService, StudentService>();

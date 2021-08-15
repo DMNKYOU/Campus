@@ -6,9 +6,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using CampusCRM.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CampusCRM.MVC.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
