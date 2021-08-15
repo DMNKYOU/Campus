@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Diagnostics;
 using CampusCRM.BLL.Interfaces;
 using CampusCRM.BLL.ModelsDTO;
 using CampusCRM.MVC.Models;
@@ -33,12 +34,20 @@ namespace CampusCRM.MVC.Controllers
         {
             ViewData["Action"] = "Add";
 
-            return View("Edit");
+            return View("Edit", new TeacherModel());
         }
 
         [HttpPost]
         public IActionResult Add(TeacherModel teacher)
         {
+            teacher.Name = teacher.Name.Trim();
+            teacher.Surname = teacher.Surname.Trim();
+            if (!ModelState.IsValid)
+            {
+                Debug.WriteLine($" From {ModelState.IsValid} { ModelState.Keys}");
+                ViewData["Action"] = "Add";
+                return View("Edit", teacher);
+            }
             _teacherService.Add(_mapper.Map<TeacherDTO>(teacher));
 
             return RedirectToAction("Index", "Teachers");
@@ -56,6 +65,14 @@ namespace CampusCRM.MVC.Controllers
         [HttpPost]
         public IActionResult Edit(TeacherModel teacher)
         {
+            teacher.Name = teacher.Name.Trim();
+            teacher.Surname = teacher.Surname.Trim();
+            if (!ModelState.IsValid)
+            {
+                Debug.WriteLine($" From {ModelState.IsValid} { ModelState.Count}");
+                ViewData["Action"] = "Edit";
+                return View("Edit", teacher);
+            }
             _teacherService.Edit(_mapper.Map<TeacherDTO>(teacher));
 
             return RedirectToAction("Index", "Teachers");
