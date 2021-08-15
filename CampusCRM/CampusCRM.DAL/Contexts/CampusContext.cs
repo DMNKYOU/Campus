@@ -1,6 +1,8 @@
-﻿using CampusCRM.DAL.Entities;
+﻿using System;
+using CampusCRM.DAL.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace CampusCRM.DAL.Contexts
 {
@@ -12,8 +14,8 @@ namespace CampusCRM.DAL.Contexts
 
         public CampusContext()
         {
-            Database.EnsureDeleted();   
-            Database.EnsureCreated();   
+            //Database.EnsureDeleted();   
+            //Database.EnsureCreated();   
         }
         public CampusContext(DbContextOptions<CampusContext> options) : base(options) { }
 
@@ -24,7 +26,12 @@ namespace CampusCRM.DAL.Contexts
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusCRMDB;Trusted_Connection=True;");
+            //IConfigurationRoot configuration = new ConfigurationBuilder()
+            //    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)/////////////////////////////////base variant!
+            //    .AddJsonFile("appsettings.json")
+            //    .Build();
+            // optionsBuilder.UseSqlServer(configuration.GetConnectionString("CampusConnectionStringDB"));
+            //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusCRMDB;Trusted_Connection=True;");
         }
     }
 }

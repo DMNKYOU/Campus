@@ -17,6 +17,7 @@ using CampusCRM.DAL.Interfaces;
 using CampusCRM.MVC.Mappings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using CampusCRM.Mail;
 
 namespace CampusCRM.MVC
 {
@@ -43,14 +44,24 @@ namespace CampusCRM.MVC
 
             services.AddControllersWithViews();
 
-            services.AddDbContext<CampusContext>();
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<CampusContext>();
+           // services.AddDbContext<CampusContext>();
+            services.AddDbContext<CampusContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("CampusConnectionStringDB")));
+
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<CampusContext>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<ITeacherService, TeacherService>();
+
+            EmailSettingsModel emailSettings = new EmailSettingsModel();
+            Configuration.GetSection("EmailSettings").Bind(emailSettings);
+            services.AddSingleton(emailSettings);
+            EmailService emailService = new EmailService(emailSettings);
+            services.AddSingleton(emailService);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
