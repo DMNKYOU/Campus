@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CampusCRM.BLL\CampusCRM.BLL.csproj" />
+    <ProjectReference Include="..\CampusCRM.DAL\CampusCRM.DAL.csproj" />
     <ProjectReference Include="..\CampusCRM.Mail\CampusCRM.Mail.csproj" />
   </ItemGroup>
 

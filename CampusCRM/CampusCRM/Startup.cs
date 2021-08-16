@@ -7,13 +7,13 @@ using AutoMapper;
 using CampusCRM.BLL.Interfaces;
 using CampusCRM.BLL.Services;
 using CampusCRM.DAL;
+using CampusCRM.DAL.Contexts;
 using CampusCRM.DAL.Interfaces;
 using CampusCRM.MVC.Mappings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CampusCRM.Mail;
 using CampusCRM.Mail.Interfaces;
-using CampusCRM.MVC.DAL.Contexts;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CampusCRM.MVC
