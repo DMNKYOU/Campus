@@ -78,6 +78,7 @@ namespace TrainingCenterCRM.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(StudentModel student)
         {
             student.Name = student.Name.Trim();

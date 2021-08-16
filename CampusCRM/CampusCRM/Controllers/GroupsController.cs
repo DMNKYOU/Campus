@@ -42,6 +42,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Add(GroupModel group)
         {
             group.Name = group.Name.Trim();
@@ -71,6 +72,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(GroupModel group)
         {
             group.Name = group.Name.Trim();

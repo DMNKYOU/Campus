@@ -1,6 +1,28 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
+﻿@using System.Security.Claims
 
-<p>Use this page to detail your site's privacy policy.</p>
+@model IEnumerable<Claim>
+
+@{ ViewBag.Title = "Требования"; }
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Требования
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <th>Subject</th>
+            <th>Issuer</th>
+            <th>Type</th>
+            <th>Value</th>
+        </tr>
+        @foreach (Claim claim in Model.OrderBy(x => x.Type))
+        {
+            <tr>
+                <td>@claim.Subject.Name</td>
+                <td>@claim.Issuer</td>
+                <td>@(claim.Type)</td>
+                <td>@claim.Value</td>
+            </tr>
+        }
+    </table>
+</div>

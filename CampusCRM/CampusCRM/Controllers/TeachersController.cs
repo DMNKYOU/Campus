@@ -38,6 +38,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Add(TeacherModel teacher)
         {
             teacher.Name = teacher.Name.Trim();
@@ -63,6 +64,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(TeacherModel teacher)
         {
             teacher.Name = teacher.Name.Trim();
