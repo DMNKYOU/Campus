@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CampusCRM.BLL", "CampusCRM.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CampusCRM.DAL", "CampusCRM.DAL\CampusCRM.DAL.csproj", "{113280D8-AC7C-43E7-AABF-5A6843ACA92D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CampusCRM.Mail", "CampusCRM.Mail\CampusCRM.Mail.csproj", "{87F994E5-DDD3-4F65-A0A3-D86FD71F1BC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CampusCRM.Mail", "CampusCRM.Mail\CampusCRM.Mail.csproj", "{87F994E5-DDD3-4F65-A0A3-D86FD71F1BC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
