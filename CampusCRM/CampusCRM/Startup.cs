@@ -1,23 +1,19 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using CampusCRM.BLL.Interfaces;
 using CampusCRM.BLL.Services;
 using CampusCRM.DAL;
-using CampusCRM.DAL.Contexts;
 using CampusCRM.DAL.Interfaces;
 using CampusCRM.MVC.Mappings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CampusCRM.Mail;
+using CampusCRM.Mail.Interfaces;
+using CampusCRM.MVC.DAL.Contexts;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CampusCRM.MVC
@@ -70,9 +66,10 @@ namespace CampusCRM.MVC
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<ITeacherService, TeacherService>();
 
+           // services.AddTransient<IMailService, EmailService>();
+
             EmailSettingsModel emailSettings = new EmailSettingsModel();
             Configuration.GetSection("EmailSettings").Bind(emailSettings);
-            services.AddSingleton(emailSettings);
             EmailService emailService = new EmailService(emailSettings);
             services.AddSingleton(emailService);
         }
