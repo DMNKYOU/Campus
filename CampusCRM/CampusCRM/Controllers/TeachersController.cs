@@ -5,6 +5,7 @@ using System.Diagnostics;
 using CampusCRM.BLL.Interfaces;
 using CampusCRM.BLL.ModelsDTO;
 using CampusCRM.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace CampusCRM.MVC.Controllers
@@ -30,6 +31,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add()
         {
             ViewData["Action"] = "Add";
@@ -39,6 +41,7 @@ namespace CampusCRM.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add(TeacherModel teacher)
         {
             teacher.Name = teacher.Name.Trim();
@@ -55,6 +58,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(policy: "ManageAndDevDepart")]
         public IActionResult Edit(int id)
         {
             var teacherDto = _teacherService.GetById(id);
@@ -65,6 +69,7 @@ namespace CampusCRM.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(policy: "ManageAndDevDepart")]
         public IActionResult Edit(TeacherModel teacher)
         {
             teacher.Name = teacher.Name.Trim();
@@ -81,6 +86,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             _teacherService.Delete(id);

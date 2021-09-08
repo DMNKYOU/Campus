@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +16,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using CampusCRM.Mail;
 using CampusCRM.Mail.Interfaces;
+using CampusCRM.MVC.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 
 namespace CampusCRM.MVC
 {
@@ -58,6 +62,8 @@ namespace CampusCRM.MVC
                 options.FallbackPolicy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
+                options.AddPolicy("ManageAndDevDepart", policy => //AllRolesFromManagementAndDevelopmentDepartment
+                    policy.RequireRole("Admin", "Manager"));
             });
 
 
@@ -72,10 +78,12 @@ namespace CampusCRM.MVC
             Configuration.GetSection("EmailSettings").Bind(emailSettings);
             EmailService emailService = new EmailService(emailSettings);
             services.AddSingleton(emailService);
+            services.Configure<SecurityOptions>(
+                Configuration.GetSection(SecurityOptions.SectionTitle));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions)
         {
             if (env.IsDevelopment())
             {
@@ -102,6 +110,40 @@ namespace CampusCRM.MVC
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            CreateRoles(serviceProvider, securityOptions).Wait();
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            var roles = new[] { "Admin", "Manager" };
+
+
+            foreach (var roleName in roles)
+                await roleManager.CreateAsync(new IdentityRole
+                {
+                    Name = roleName,
+                    NormalizedName = roleName.ToUpper()
+                });
+
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            var adminUser = await userManager.FindByEmailAsync(securityOptions.Value.AdminUserEmail);
+
+            if (adminUser != null)
+            {
+                await userManager.AddToRoleAsync(adminUser, "Admin");
+            }
+
+            var managerUser = await userManager.FindByEmailAsync(Configuration["Security:ManagerUserEmail"]);
+
+            if (managerUser != null)
+            {
+                await userManager.AddToRoleAsync(managerUser, "Manager");
+            }
+
+
         }
     }
 }
