@@ -118,8 +118,6 @@ namespace CampusCRM.MVC
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             var roles = new[] { "Admin", "Manager" };
-
-
             foreach (var roleName in roles)
                 await roleManager.CreateAsync(new IdentityRole
                 {
@@ -127,21 +125,16 @@ namespace CampusCRM.MVC
                     NormalizedName = roleName.ToUpper()
                 });
 
+
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
             var adminUser = await userManager.FindByEmailAsync(securityOptions.Value.AdminUserEmail);
-
             if (adminUser != null)
-            {
                 await userManager.AddToRoleAsync(adminUser, "Admin");
-            }
 
             var managerUser = await userManager.FindByEmailAsync(Configuration["Security:ManagerUserEmail"]);
-
-            if (managerUser != null)
-            {
+            if (managerUser != null) 
                 await userManager.AddToRoleAsync(managerUser, "Manager");
-            }
 
 
         }
