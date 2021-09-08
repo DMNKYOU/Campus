@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using CampusCRM.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
 using Group = CampusCRM.DAL.Entities.Group;
 
 namespace CampusCRM.DAL.Contexts
@@ -62,6 +63,10 @@ namespace CampusCRM.DAL.Contexts
                 }
             );
 
+            /*modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Name = "admin" },
+                new IdentityRole { Name = "manager" }
+            );*/
         }
     }
 }

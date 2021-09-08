@@ -12,7 +12,7 @@ namespace CampusCRM.DAL.Contexts
         public DbSet<Group> Groups { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
 
-        public CampusContext()
+        public CampusContext(): base()
         {
             //Database.EnsureDeleted();   
             //Database.EnsureCreated();   
@@ -22,7 +22,7 @@ namespace CampusCRM.DAL.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Seed();
+            modelBuilder.Seed();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
