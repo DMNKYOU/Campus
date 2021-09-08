@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CampusCRM.MVC.Controllers
 {
-   // [AllowAnonymous]
+   [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
