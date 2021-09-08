@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CampusCRM.BLL.Interfaces;
 using CampusCRM.BLL.ModelsDTO;
 using CampusCRM.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CampusCRM.MVC.Controllers
 {
@@ -30,7 +31,9 @@ namespace CampusCRM.MVC.Controllers
             return View(groupsDto);
         }
 
+
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add()
         {
             var teachers = _teacherService.GetAll();
@@ -42,6 +45,8 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add(GroupModel group)
         {
             group.Name = group.Name.Trim();
@@ -60,6 +65,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(policy: "ManageAndDevDepart")]
         public IActionResult Edit(int id)
         {
             var groupDto = _groupService.GetById(id);
@@ -71,6 +77,8 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(policy: "ManageAndDevDepart")]
         public IActionResult Edit(GroupModel group)
         {
             group.Name = group.Name.Trim();
@@ -89,6 +97,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             _groupService.Delete(id);

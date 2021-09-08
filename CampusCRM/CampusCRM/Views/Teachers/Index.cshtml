@@ -1,7 +1,7 @@
-﻿@model List<TeacherModel>
-@{
-    ViewData["Title"] = "Teachers";
-}
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model List<TeacherModel>
+@{ ViewData["Title"] = "Teachers"; }
 
 <div class="content">
     <h1>Teachers</h1>
@@ -23,13 +23,22 @@
                 <th scope="col">@teacher.Surname</th>
                 <th scope="col">@teacher.Age</th>
                 <th scope="col" class="d-flex justify-content-start">@teacher.Info</th>
-                <th scope="col">
-                    <a class="btn btn-success m-1" asp-controller="Teachers" asp-action="Edit" asp-route-id="@teacher.Id">Edit</a>
-                    <a class="btn btn-danger m-1" asp-controller="Teachers" asp-action="Delete" asp-route-id="@teacher.Id">Delete</a>
-                </th>
-            </tr>
-        }
+                @if ((await AuthorizationService.AuthorizeAsync(User, "ManageAndDevDepart")).Succeeded)
+                {
+                    <th scope="col">
+
+                        <a class="btn btn-success m-1" asp-controller="Teachers" asp-action="Edit" asp-route-id="@teacher.Id">Edit</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-danger m-1" asp-controller="Teachers" asp-action="Delete" asp-route-id="@teacher.Id">Delete</a>
+                        }
+                    </th>
+                }
+            </tr>}
         </tbody>
     </table>
-    <a class="btn btn-primary" asp-controller="Teachers" asp-action="Add">Add new teacher</a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-primary" asp-controller="Teachers" asp-action="Add">Add new teacher</a>
+    }
 </div>

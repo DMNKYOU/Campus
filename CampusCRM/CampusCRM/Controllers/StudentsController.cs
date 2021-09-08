@@ -7,6 +7,7 @@ using CampusCRM.BLL.Interfaces;
 using CampusCRM.BLL.ModelsDTO;
 using CampusCRM.DAL.Entities;
 using CampusCRM.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TrainingCenterCRM.Controllers
 {
@@ -36,6 +37,7 @@ namespace TrainingCenterCRM.Controllers
 
         // GET: StudentsController/Add
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add()
         {
             var groups = _groupService.GetAll();
@@ -48,6 +50,7 @@ namespace TrainingCenterCRM.Controllers
         // POST: StudentsController/Add
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public IActionResult Add(StudentModel student)
         {
             student.Name = student.Name.Trim();
@@ -67,6 +70,7 @@ namespace TrainingCenterCRM.Controllers
 
         // GET: StudentsController/Edit/5
         [HttpGet]
+        [Authorize(policy: "ManageAndDevDepart")]
         public IActionResult Edit(int id)
         {
             var student = _studentService.GetById(id);
@@ -78,6 +82,8 @@ namespace TrainingCenterCRM.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(policy: "ManageAndDevDepart")]
         public IActionResult Edit(StudentModel student)
         {
             student.Name = student.Name.Trim();
@@ -96,6 +102,7 @@ namespace TrainingCenterCRM.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             _studentService.Delete(id);
