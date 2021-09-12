@@ -1,0 +1,9 @@
+How to connect to the db 
+mongo "mongodb://breakpoint-shard-00-00-ti5q0.mongodb.net:27017,breakpoint-shard-00-01-ti5q0.mongodb.net:27017,breakpoint-shard-00-02-ti5q0.mongodb.net:27017/test?replicaSet=Breakpoint-shard-0" --authenticationDatabase admin --ssl --username Breakpoint --password breakpoint
+
+
+// how to see collections
+how dbs
+use student-app
+show collections
+db.users.find().pretty

@@ -1,0 +1,56 @@
+.cart {
+    padding-left: 120px;
+    padding-right: 120px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.bold {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.faint {
+    color: grey;
+    font-size: 12px;
+}
+
+.padded-img {
+    padding-bottom: 40px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.padded-txt {
+    padding-left: 20px;
+}
+
+.padded-prod-name{
+    padding-top: 10px;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.button-right {
+    width: 300px;
+    height:250px;
+    display: inline-block;
+    position: absolute;
+    right: 120px;
+}
+
+.button-left {
+    width: 300px;
+    height: 250px;
+    display: inline-block;
+    position: absolute;
+    left:120px;
+}
+
+img {
+    height: 50%;
+    width: 50%;
+}

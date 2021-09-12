@@ -1,0 +1,242 @@
+<!-- Mobile Filter -->
+<section id="mobile-filter">
+  <button class="btn btn-dark visible-xs-block refineBy" data-toggle="modal" data-target="#exampleModalLong" title="Refine by">
+    <i class="fa fa-search fa-3x"></i>
+  </button>
+  <div class="modal fade refine" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title" id="exampleModalLongTitle">Refine By</h1>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="modal-body">
+          <form class="form-inline" role="form">
+            <div class="form-group">
+              <div class="form-group">
+                <input type="text" name="search" [(ngModel)]="search" class="form-control search" placeholder="I am searching for...">
+              </div>
+
+              <!-- Sort By -->
+              <div class="dropdown">
+                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">Sort By
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <a role="button" (click)="performSort('Popularity')">Popularity</a>
+                  </li>
+                  <li>
+                    <a role="button" (click)="performSort('Price - Low to High')">Price - Low to High</a>
+                  </li>
+                  <li>
+                    <a role="button" (click)="performSort('Price - High to Low')">Price - High to Low</a>
+                  </li>
+                  <li>
+                    <a role="button" (click)="performSort('Rating')">Rating</a>
+                  </li>
+                </ul>
+              </div>
+              <!-- Sort By End -->
+
+              <!-- Filter -->
+              <div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" (change)="mens = !mens">Mens</label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" (change)="womens = !womens">Womens</label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" (change)="jackets = !jackets">Jackets</label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" (change)="jeans = !jeans">Jeans</label>
+                </div>
+              </div>
+              <!-- Filter End -->
+
+            </div>
+          </form>
+        </div>
+        <!-- Modal Content End -->
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Mobile Filter End -->
+
+<div class="row body">
+
+  <!-- Filter -->
+  <div class="col-md-2 refine">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+      <ul class="nav navbar-nav">
+        <section>
+          <div class="filter-list">
+
+            <!-- Search -->
+            <div class="form-group">
+              <input type="text" name="search" [(ngModel)]="search" class="form-control search" placeholder="I am searching for...">
+            </div>
+            <!-- Search End -->
+
+            <!-- Sort By -->
+            <div class="dropdown filter">
+              <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">Sort By
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a role="button" (click)="performSort('Popularity')">Popularity</a>
+                </li>
+                <li>
+                  <a role="button" (click)="performSort('Price - Low to High')">Price - Low to High</a>
+                </li>
+                <li>
+                  <a role="button" (click)="performSort('Price - High to Low')">Price - High to Low</a>
+                </li>
+              </ul>
+            </div>
+            <!-- Sort By End -->
+
+            <!-- Refine -->
+            <section>
+              <svg viewBox="0 0 0 0" style="position: absolute; z-index: -1; opacity: 0;">
+                <defs>
+                  <linearGradient id="boxGradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="25" y2="25">
+                    <stop offset="0%" stop-color="#333" />
+                    <stop offset="100%" stop-color="#333" />
+                  </linearGradient>
+
+                  <path id="filter__box" stroke="url(#boxGradient)" d="M21 12.7v5c0 1.3-1 2.3-2.3 2.3H8.3C7 20 6 19 6 17.7V7.3C6 6 7 5 8.3 5h10.4C20 5 21 6 21 7.3v5.4"></path>
+                  <path id="filter__check" stroke="url(#boxGradient)" d="M10 13l2 2 5-5"></path>
+                  <circle id="filter__circle" cx="13.5" cy="12.5" r="10"></circle>
+                </defs>
+              </svg>
+
+
+              <label class="filter">
+                <input class="filter__state" type="checkbox" (change)="mens = !mens" />
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="filter__icon">
+                  <use xlink:href="#filter__box" class="filter__box"></use>
+                  <use xlink:href="#filter__check" class="filter__check"></use>
+                  <use xlink:href="#filter__circle" class="filter__circle"></use>
+                </svg>
+                <div class="filter__text">Mens</div>
+              </label>
+
+              <label class="filter">
+                <input class="filter__state" type="checkbox" (change)="womens = !womens" />
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="filter__icon">
+                  <use xlink:href="#filter__box" class="filter__box"></use>
+                  <use xlink:href="#filter__check" class="filter__check"></use>
+                  <use xlink:href="#filter__circle" class="filter__circle"></use>
+                </svg>
+                <div class="filter__text">Womens</div>
+              </label>
+
+              <label class="filter">
+                <input class="filter__state" type="checkbox" (change)="jackets = !jackets" />
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="filter__icon">
+                  <use xlink:href="#filter__box" class="filter__box"></use>
+                  <use xlink:href="#filter__check" class="filter__check"></use>
+                  <use xlink:href="#filter__circle" class="filter__circle"></use>
+                </svg>
+                <div class="filter__text">Jackets</div>
+              </label>
+
+              <label class="filter">
+                <input class="filter__state" type="checkbox" (change)="jeans = !jeans" />
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 25" class="filter__icon">
+                  <use xlink:href="#filter__box" class="filter__box"></use>
+                  <use xlink:href="#filter__check" class="filter__check"></use>
+                  <use xlink:href="#filter__circle" class="filter__circle"></use>
+                </svg>
+                <div class="filter__text">Jeans</div>
+              </label>
+            </section>
+            <!-- Refine End -->
+
+
+          </div>
+        </section>
+      </ul>
+    </div>
+  </div>
+  <!-- Filter End -->
+
+
+  <!-- Products -->
+  <div class="col-md-10 container-fluid">
+    <div *ngIf="products && filteredProducts.length"></div>
+    <div class="col-sm-6 col-md-4 col-lg-3 container-fluid" *ngFor="let product of filteredProducts">
+
+      <!-- Product Card -->
+      <div class="card wrapper">
+        <div>
+          <img class="img-responsive" src="{{product.images[0]}}" alt="Card image cap">
+        </div>
+
+        <div class="inside">
+          <div class="icon">
+            <i class="fa fa-info fa-2x"></i>
+          </div>
+          <div class="contents">
+
+            <!-- Description -->
+            <p>{{product.desc}}</p>
+            <!-- Description End -->
+
+            <!-- Sizes >
+            <h3>size</h3>
+            <div class="options">
+              <a class="option" href="#">6</a>
+              <a class="option" href="#">7</a>
+              <a class="option" href="#">8</a>
+              <a class="option" href="#">9</a>
+              <a class="option" href="#">10</a>
+            </div>
+            <!-- Sizes End -->
+
+          </div>
+        </div>
+
+        <div class="left">
+          <h2 class="card-name">{{product.name}}</h2>
+          <h3 class="card-price">€{{product.price}}</h3>
+
+          <!-- Stock -->
+          <div class="card-stock">
+            <span *ngIf="product.stock > 15 " class="available">Available</span>
+            <span *ngIf="product.stock == 0 " class="out-of-stock">Out of Stock</span>
+            <span *ngIf="product.stock <= 15 && product.stock != 0" class="out-of-stock">Hurry only {{product.stock}} left!</span>
+          </div>
+          <!-- Stock End -->
+
+          <button type="button" *ngIf="product.stock > 0" class="btn btn-primary cart-button" (click)="addToCart(product)">
+            <i class="fa fa-shopping-bag fa-2x"></i>
+          </button>
+          <button type="button" *ngIf="product.stock == 0" class="btn btn-primary cart-button" disabled="true">
+            <i class="fa fa-shopping-bag fa-2x"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Product End -->
+
+</div>

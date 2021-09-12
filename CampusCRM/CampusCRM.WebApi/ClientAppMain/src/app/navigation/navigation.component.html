@@ -1,0 +1,69 @@
+<!-- Nav -->
+<nav class="navbar navbar-inverse fixed" role="navigation">
+    <div class="container-fluid">
+
+        <!-- Mobile Display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <!-- Mobile Display End -->
+
+        <!-- Desktop Display -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <!-- Left Nav-->
+            <ul class="nav navbar-nav navbar-left">
+                <li [routerLinkActive]="['inactive']" [routerLinkActiveOptions]="{exact:true}">
+                    <a class="navbar-brand" role="button" [routerLink]="['']"> eHappy Shop
+                        <!-- image not working -->
+                        <!-- <img class="brand" src='../assets/images/logo.png' alt="eHappy Shop"> -->
+                    </a>
+                </li>
+            </ul>
+            <!-- Left Nav End -->
+
+            <!-- Center Nav -->
+            <div class="center">
+                <ul class="nav navbar-nav">
+
+                    <!-- Login -->
+                    <li>
+                        <ul class="dropdown">
+                            <app-login></app-login>
+                        </ul>
+                    </li>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                            <a [routerLink]="['/profile']">Profile</a>
+                        </li>
+                        <!-- Login End -->
+
+                        <!-- Pages -->
+                        <li>
+                            <a role="button" [routerLink]="['/products']">Products</a>
+                        </li>
+                        <!-- Pages End -->
+                    </ul>
+                </ul>
+            </div>
+            <!-- Center Nav End -->
+
+            <!-- Cart -->
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <ul>
+                        <app-cart-pg></app-cart-pg>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Cart End -->
+        </div>
+        <!-- Desktop Display End -->
+    </div>
+</nav>
+<!-- Nav -->

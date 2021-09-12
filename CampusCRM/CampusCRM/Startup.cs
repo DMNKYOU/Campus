@@ -49,6 +49,19 @@ namespace CampusCRM.MVC
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
 
+
+
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "ClientAppBase/dist";
+            //});
+
+
+
+
+
+
+
             // services.AddDbContext<CampusContext>();
             services.AddDbContext<CampusContext>(options =>
                 options.UseSqlServer(

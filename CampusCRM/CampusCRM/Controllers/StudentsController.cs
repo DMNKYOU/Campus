@@ -12,7 +12,7 @@ using CampusCRM.MVC.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 
-namespace CampusCRM.MvcOptions.Controllers
+namespace CampusCRM.MvcOptions.Controllers.API
 {
     public class StudentsController : Controller
     {
