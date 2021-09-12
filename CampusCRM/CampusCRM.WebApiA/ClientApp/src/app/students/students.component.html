@@ -1,0 +1,18 @@
+<h1 id="tableLabel">Students</h1>
+
+<p *ngIf="!students"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="students">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Surname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let st of students">
+      <td>{{st.name }}</td>
+      <td>{{ st.surname }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -52,10 +52,10 @@ namespace CampusCRM.MVC
 
 
 
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "ClientApp/dist";
+            //});
 
 
 
@@ -137,13 +137,13 @@ namespace CampusCRM.MVC
 
             loggerFactory.AddFile($"Logs/log.txt");
 
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //        name: "default",
-            //        pattern: "{controller=Home}/{action=Index}/{id?}");
-            //    endpoints.MapRazorPages();
-            //});
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+            });
 
             CreateRoles(serviceProvider, securityOptions).Wait();
 
@@ -152,18 +152,19 @@ namespace CampusCRM.MVC
 
 
 
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
+            //app.UseSpa(spa =>
+            //{
+            //    // To learn more about options for serving an Angular SPA from ASP.NET Core,
+            //    // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                spa.Options.SourcePath = "ClientApp";
+            //    spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
-            });
+            //    if (env.IsDevelopment())
+            //    {
+            //        //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+            //        spa.UseAngularCliServer(npmScript: "start");
+            //    }
+            //});
 
         }
 
