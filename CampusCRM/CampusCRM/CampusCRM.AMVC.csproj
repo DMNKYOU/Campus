@@ -12,7 +12,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="ClientApp\angular.json" />
+    <Content Remove="ClientApp\e2e\tsconfig.e2e.json" />
+    <Content Remove="ClientApp\package-lock.json" />
+    <Content Remove="ClientApp\package.json" />
+    <Content Remove="ClientApp\tsconfig.json" />
+    <Content Remove="ClientApp\tslint.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
+    <None Include="ClientApp\angular.json" />
+    <None Include="ClientApp\e2e\tsconfig.e2e.json" />
+    <None Include="ClientApp\package-lock.json" />
+    <None Include="ClientApp\package.json" />
+    <None Include="ClientApp\tsconfig.json" />
+    <None Include="ClientApp\tslint.json" />
     <None Include="Views\Courses\EditCourse.cshtml" />
     <None Include="Views\Courses\Index.cshtml" />
     <None Include="Views\StudentRequests\EditRequest.cshtml" />
