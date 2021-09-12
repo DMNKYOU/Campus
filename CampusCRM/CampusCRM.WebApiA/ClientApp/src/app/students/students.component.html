@@ -6,13 +6,15 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Surname</th>
+      <th>Age</th>
+      <th>Group</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let st of students">
-      <td>{{st.name }}</td>
-      <td>{{ st.surname }}</td>
+      <td>{{st.name }} {{ st.surname }}</td>
+      <td>{{ st.age }}</td>
+      <td>{{ st.groupName }}</td>
     </tr>
   </tbody>
 </table>
