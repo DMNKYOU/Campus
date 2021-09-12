@@ -28,7 +28,7 @@
     <None Include="ClientApp\package.json" />
     <None Include="ClientApp\tsconfig.json" />
     <None Include="ClientApp\tslint.json" />
-    <None Include="Views\Courses\EditCourse.cshtml" />
+    <None Include="Views\Courses\Edit.cshtml" />
     <None Include="Views\Courses\Index.cshtml" />
     <None Include="Views\StudentRequests\EditRequest.cshtml" />
     <None Include="Views\StudentRequests\Index.cshtml" />
@@ -41,8 +41,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.18" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

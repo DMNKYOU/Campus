@@ -18,3 +18,11 @@ app.get('/*', function(req, res) {
 // Start the app by listening on the default
 // Heroku port
 app.listen(process.env.PORT || 4200);
+
+//spawn = require('child_process').spawn;
+//child = spawn('node', ['child.js']);
+
+//setTimeout(function () {
+//  child.kill();
+//}, 5000
+//);

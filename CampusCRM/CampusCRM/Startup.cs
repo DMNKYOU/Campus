@@ -20,7 +20,7 @@ using CampusCRM.MVC.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
+using System.Diagnostics;
 
 namespace CampusCRM.MVC
 {
@@ -50,24 +50,17 @@ namespace CampusCRM.MVC
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
 
-
-
             //services.AddSpaStaticFiles(configuration =>
             //{
             //    configuration.RootPath = "ClientApp/dist";
             //});
 
 
-
-
-
-
-
             // services.AddDbContext<CampusContext>();
             services.AddDbContext<CampusContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("CampusConnectionStringDB")));
-       
+
 
             services.AddDefaultIdentity<IdentityUser>(
                     options => options.SignIn.RequireConfirmedAccount = true)
@@ -110,7 +103,6 @@ namespace CampusCRM.MVC
             services.AddSingleton(emailService);
             services.Configure<SecurityOptions>(
                 Configuration.GetSection(SecurityOptions.SectionTitle));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -127,6 +119,9 @@ namespace CampusCRM.MVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            CreateRoles(serviceProvider, securityOptions).Wait();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -145,12 +140,7 @@ namespace CampusCRM.MVC
                 endpoints.MapRazorPages();
             });
 
-            CreateRoles(serviceProvider, securityOptions).Wait();
-
-
-
-
-
+            
 
             //app.UseSpa(spa =>
             //{
@@ -186,12 +176,33 @@ namespace CampusCRM.MVC
             var adminUser = await userManager.FindByEmailAsync(securityOptions.Value.AdminUserEmail);
             if (adminUser != null)
                 await userManager.AddToRoleAsync(adminUser, "Admin");
+            else
+                await CreateUserWithRoleAsync(userManager, securityOptions.Value.AdminUserEmail, securityOptions.Value.Password, "Admin");
+
 
             var managerUser = await userManager.FindByEmailAsync(Configuration["Security:ManagerUserEmail"]);
             if (managerUser != null) 
                 await userManager.AddToRoleAsync(managerUser, "Manager");
-
-
+            else
+                await CreateUserWithRoleAsync(userManager, securityOptions.Value.ManagerUserEmail, securityOptions.Value.Password, "Manager");
         }
+
+        private async Task CreateUserWithRoleAsync(UserManager<IdentityUser> userManager, string userEmail, string password, string role)
+        {
+            IdentityUser user = new IdentityUser
+            {
+                UserName = userEmail,
+                Email = userEmail,
+                EmailConfirmed = true
+            };
+
+            IdentityResult result = userManager.CreateAsync(user, password).Result;
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, role);
+            }
+        }
+        
     }
 }

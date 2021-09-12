@@ -19,7 +19,7 @@
             <!-- Left Nav-->
             <ul class="nav navbar-nav navbar-left">
                 <li [routerLinkActive]="['inactive']" [routerLinkActiveOptions]="{exact:true}">
-                    <a class="navbar-brand" role="button" [routerLink]="['']"> eHappy Shop
+                    <a class="navbar-brand" role="button" [routerLink]="['']"> Campus CRM
                         <!-- image not working -->
                         <!-- <img class="brand" src='../assets/images/logo.png' alt="eHappy Shop"> -->
                     </a>
@@ -32,22 +32,27 @@
                 <ul class="nav navbar-nav">
 
                     <!-- Login -->
-                    <li>
+                    <!--<li>
                         <ul class="dropdown">
                             <app-login></app-login>
                         </ul>
-                    </li>
+                    </li>-->
                     <ul class="nav navbar-nav navbar-right">
-                        <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
-                            <a [routerLink]="['/profile']">Profile</a>
-                        </li>
-                        <!-- Login End -->
-
-                        <!-- Pages -->
-                        <li>
-                            <a role="button" [routerLink]="['/products']">Products</a>
-                        </li>
-                        <!-- Pages End -->
+                      <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                        <a [routerLink]="['/profile']">Profile</a>
+                      </li>
+                      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+                        <a [routerLink]="['/students']">Students</a>
+                      </li>
+                      <!-- Login End -->
+                      <!-- Pages -->
+                      <li>
+                        <a role="button" [routerLink]="['/products']">Products</a>
+                      </li>
+                      <li>
+                        <a role="button" [routerLink]="['/students']">Students</a>
+                      </li>
+                      <!-- Pages End -->
                     </ul>
                 </ul>
             </div>

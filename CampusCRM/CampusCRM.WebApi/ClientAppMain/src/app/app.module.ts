@@ -25,6 +25,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { CartComponent } from './cart-pg/cart-pg.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { FooterComponent } from './footer/footer.component';
+import { StudentsComponent } from './students/students.component';
 
 // adding routes
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'cart', component: CartPgComponent },
   { path: 'cart-pg', component: CartPgComponent },
   { path: 'checkout', component: CheckoutComponent }
+  { path: 'students', component: StudentsComponent }
 ];
 
 @NgModule({
@@ -49,7 +51,8 @@ const routes: Routes = [
     NavigationComponent,
     CartPgComponent,
     CheckoutComponent,
-    FooterComponent
+    FooterComponent,
+    StudentsComponent
   ],
   imports: [
     BrowserModule,

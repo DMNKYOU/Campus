@@ -52,7 +52,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditGroupAsync(int? id)
+        public async Task<IActionResult> EditAsync(int? id)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace CampusCRM.MVC.Controllers
             }
         }
         [HttpGet]
-        public async Task<IActionResult> AddGroupAsync(int? id)
+        public async Task<IActionResult> AddAsync(int? id)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace CampusCRM.MVC.Controllers
                 ViewBag.Teachers = await _teacherService.GetAllAsync();
                 ViewBag.Courses = await _courseService.GetAllAsync();
 
-                return View("EditGroup", groupModel);
+                return View("Edit", groupModel);
             }
             catch (Exception ex)
             {
@@ -92,7 +92,7 @@ namespace CampusCRM.MVC.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> EditGroupAsync(GroupModel groupModel, List<int> studentsId)
+        public async Task<IActionResult> EditAsync(GroupModel groupModel, List<int> studentsId)
         {
             try
             {

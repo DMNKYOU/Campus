@@ -34,7 +34,7 @@ namespace CampusCRM.WebApi
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientAppBase/dist";
+                configuration.RootPath = "ClientAppMain/dist";
             });
 
             services.AddDbContext<CampusContext>(options =>
@@ -93,7 +93,7 @@ namespace CampusCRM.WebApi
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                spa.Options.SourcePath = "ClientAppBase";
+                spa.Options.SourcePath = "ClientAppMain";
 
                 if (env.IsDevelopment())
                 {

@@ -23,7 +23,7 @@
                     <th scope="col">@group.StartDate.ToString("dd.MM.yyyy")</th>
                     <th scope="col">@group.Teacher.Name @group.Teacher.Surname</th>
                     <th scope="col" class="text-center">
-                        <a class="btn btn-success m-1" asp-controller="Groups" asp-action="EditGroup" asp-route-id="@group.Id">Edit</a>
+                        <a class="btn btn-success m-1" asp-controller="Groups" asp-action="Edit" asp-route-id="@group.Id">Edit</a>
                         <a class="btn btn-danger m-1" asp-controller="Groups" asp-action="Delete" asp-route-id="@group.Id">Delete</a>
                     </th>
                 </tr>
@@ -31,7 +31,7 @@
         </tbody>
     </table>
     <div>
-        <a class="btn btn-primary" asp-controller="Groups" asp-action="AddGroup">Add new group</a>
+        <a class="btn btn-primary" asp-controller="Groups" asp-action="Add">Add new group</a>
     </div>
 </div>
               

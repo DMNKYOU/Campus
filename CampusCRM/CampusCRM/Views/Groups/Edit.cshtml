@@ -8,7 +8,7 @@
     <h1 class="">Work with group</h1>
     <div class="col-sm-4"></div>
     <div class="col-sm-6">
-        <form method="post" asp-controller="Groups" asp-action="EditGroup" asp-route-id="@Model.Id">
+        <form method="post" asp-controller="Groups" asp-action="Edit" asp-route-id="@Model.Id">
             @Html.HiddenFor(g => g.Id)
             <div class="mb-3 row">
                 <label asp-for="Name" class="col-sm-2 col-form-label"></label>

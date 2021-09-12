@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CampusCRM.BLL.ModelsDTO;
 using CampusCRM.DAL.Entities;
-using CampusCRM.WebApi.Dto;
+using CampusCRM.WebApi.Models;
 
 namespace CampusCRM.WebApi.Mapper
 {
@@ -9,13 +9,15 @@ namespace CampusCRM.WebApi.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<StudentDTO, CourseDto>()
-               // .ForMember(model => model.TopicName, map => map.MapFrom(c => c.Topic.Title))
+            CreateMap<StudentDTO, StudentModel>()
+                //.ForMember(model => model.TopicName, map => map.MapFrom(c => c.Topic.Title))
                 .ReverseMap();
             CreateMap<StudentDTO, Student>().ForMember(destination => destination.Group,
                     opts => opts.MapFrom(source => source.Group))
                 .ReverseMap();
-            
+
+            CreateMap<GroupDTO, Group>().ReverseMap();
+
         }
     }
 }

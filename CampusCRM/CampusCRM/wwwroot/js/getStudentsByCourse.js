@@ -35,15 +35,16 @@ function getStudentsByCourse() {
     });
 }
 
+
 function showStudents(students) {
 
     $("#students").append(`<label class="col-sm-2 col-form-label">Students</label>`);
 
-    $("#students").append(`<ul class="col-sm-10"></ul>
-    `);
+    $("#students").append(`<ul class="list-students"></ul>`);
 
     students.forEach((student) => {
-        $(".list-students").append(`<li class="list-group-item">
+        $(".list-students").append(`
+                <li class="list-group-item">
                     <label class="list-item">${student.name} ${student.surname}
                         <input type="checkbox" name="studentsId" value="${student.id}" id="checkboxtoedit${student.id}" >
                     </label>
@@ -52,3 +53,4 @@ function showStudents(students) {
         document.getElementById("checkboxtoedit" + student.id).checked = student.hasGroup;
     });
 }
+

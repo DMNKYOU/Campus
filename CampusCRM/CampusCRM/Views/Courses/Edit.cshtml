@@ -7,19 +7,17 @@
     <h1 class="content__header">Work with course</h1>
     <div>
         <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-            <form method="post" asp-controller="Courses" asp-action="EditCourse" asp-route-id="@Model.Id">
+        <div class="col-sm-6">
+            <form method="post" asp-controller="Courses" asp-action="Edit" asp-route-id="@Model.Id">
                 <div class="mb-3 row">
                     <label asp-for="Title" class="col-sm-3 col-form-label"></label>
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-9">
+                        <div class="col-sm-9">
                         <input class="form-control" type="text" asp-for="Title" />
                         <span asp-validation-for="Title" class="alert-danger"></span>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label asp-for="Description" class="col-sm-3 col-form-label"></label>
-                    <div class="col-sm-4"></div>
                     <div class="col-sm-9">
                         <input class="form-control" type="text" asp-for="Description" />
                         <span asp-validation-for="Description" class="alert-danger"></span>

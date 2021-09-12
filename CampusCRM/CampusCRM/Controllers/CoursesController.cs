@@ -45,7 +45,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditCourseAsync(int? id)
+        public async Task<IActionResult> EditAsync(int? id)
         {   
             try
             {
@@ -60,7 +60,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditCourseAsync(CourseModel courseModel)
+        public async Task<IActionResult> EditAsync(CourseModel courseModel)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace CampusCRM.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteCourseAsync(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             try
             {
