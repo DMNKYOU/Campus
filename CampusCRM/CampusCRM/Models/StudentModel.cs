@@ -30,10 +30,11 @@ namespace CampusCRM.MVC.Models
         /// /////////////////
         /// </summary>
         [Display(Name = "Group")]
-        public int GroupId { get; set; }
+        public int? GroupId { get; set; }
         /// <summary>
         /// //////////////////
         /// </summary>
         public GroupModel Group { get; set; }
+        public bool HasGroup { get; set; }
     }
 }

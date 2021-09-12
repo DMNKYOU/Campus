@@ -19,6 +19,8 @@ using CampusCRM.Mail.Interfaces;
 using CampusCRM.MVC.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace CampusCRM.MVC
 {
@@ -43,19 +45,33 @@ namespace CampusCRM.MVC
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
 
-           // services.AddDbContext<CampusContext>();
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "ClientApp/dist";
+            //});
+
+
+            // services.AddDbContext<CampusContext>();
             services.AddDbContext<CampusContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("CampusConnectionStringDB")));
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<CampusContext>();
+
 
             services.AddDefaultIdentity<IdentityUser>(
                     options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CampusContext>();
+
+            //services.AddIdentity<IdentityUser, IdentityRole>(
+            //        options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddDefaultUI()
+            //    .AddEntityFrameworkStores<CampusContext>()
+            //    .AddDefaultTokenProviders();
 
             services.AddAuthorization(options =>
             {
@@ -71,8 +87,15 @@ namespace CampusCRM.MVC
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<ITeacherService, TeacherService>();
+            
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<ITeacherService, TeacherService>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ITopicService, TopicService>();
+            services.AddScoped<IStudentRequestService, StudentRequestService>();
 
-           // services.AddTransient<IMailService, EmailService>();
+            // services.AddTransient<IMailService, EmailService>();
 
             EmailSettingsModel emailSettings = new EmailSettingsModel();
             Configuration.GetSection("EmailSettings").Bind(emailSettings);
@@ -83,11 +106,12 @@ namespace CampusCRM.MVC
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions,ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
             }
             else
             {
@@ -95,6 +119,9 @@ namespace CampusCRM.MVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            CreateRoles(serviceProvider, securityOptions).Wait();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -103,6 +130,8 @@ namespace CampusCRM.MVC
             app.UseAuthentication();
             app.UseAuthorization();
 
+            loggerFactory.AddFile($"Logs/log.txt");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -110,7 +139,23 @@ namespace CampusCRM.MVC
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
-            CreateRoles(serviceProvider, securityOptions).Wait();
+
+            
+
+            //app.UseSpa(spa =>
+            //{
+            //    // To learn more about options for serving an Angular SPA from ASP.NET Core,
+            //    // see https://go.microsoft.com/fwlink/?linkid=864501
+
+            //    spa.Options.SourcePath = "ClientApp";
+
+            //    if (env.IsDevelopment())
+            //    {
+            //        //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+            //        spa.UseAngularCliServer(npmScript: "start");
+            //    }
+            //});
+
         }
 
         private async Task CreateRoles(IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions)
@@ -131,12 +176,33 @@ namespace CampusCRM.MVC
             var adminUser = await userManager.FindByEmailAsync(securityOptions.Value.AdminUserEmail);
             if (adminUser != null)
                 await userManager.AddToRoleAsync(adminUser, "Admin");
+            else
+                await CreateUserWithRoleAsync(userManager, securityOptions.Value.AdminUserEmail, securityOptions.Value.Password, "Admin");
+
 
             var managerUser = await userManager.FindByEmailAsync(Configuration["Security:ManagerUserEmail"]);
             if (managerUser != null) 
                 await userManager.AddToRoleAsync(managerUser, "Manager");
-
-
+            else
+                await CreateUserWithRoleAsync(userManager, securityOptions.Value.ManagerUserEmail, securityOptions.Value.Password, "Manager");
         }
+
+        private async Task CreateUserWithRoleAsync(UserManager<IdentityUser> userManager, string userEmail, string password, string role)
+        {
+            IdentityUser user = new IdentityUser
+            {
+                UserName = userEmail,
+                Email = userEmail,
+                EmailConfirmed = true
+            };
+
+            IdentityResult result = userManager.CreateAsync(user, password).Result;
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, role);
+            }
+        }
+        
     }
 }

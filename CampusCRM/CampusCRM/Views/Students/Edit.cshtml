@@ -14,6 +14,8 @@
             <div class="col-sm-4">
                 @using (Html.BeginForm($"{action}", "Students", FormMethod.Post))
                 {
+                @*<form method="post" asp-controller="Students" asp-action="${ViewData["Action"]}" asp-route-id="@Model.Id">*@
+
                     @Html.HiddenFor(x => x.Id)
 
                     <div class="mb-3 row">
@@ -40,19 +42,22 @@
                     <div class="mb-3 row">
                         <label asp-for="GroupId" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <select class="form-control" asp-for="GroupId" required>
+                            <select class="form-control" asp-for="GroupId">
                                 @if (ViewBag.Groups != null)
                                 {
+                                    if(!Model.GroupId.HasValue)
+                                    {
+                                        <option value="" id="0" selected="selected">Select</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="" id="0">Select</option>
+
+                                    }
+                                    
                                     foreach (var group in (List<GroupModel>)ViewBag.Groups)
                                     {
-                                        if (Model != null && group.Id == Model.GroupId)
-                                        {
-                                            <option value="@group.Id" selected>@group.Name</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@group.Id">@group.Name</option>
-                                        }
+                                        <option value="@group.Id" id="@group.Id">@group.Name</option> //}
                                     }
                                 }
                             </select>
@@ -60,8 +65,35 @@
                     </div>
                     <button type="submit" class="btn btn-success">@action student</button>
                 }
+                @*</form>*@
             </div>
             <div class="col-sm-4"></div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial.cshtml")
+
+    <script>
+        $(document).ready(function () {
+            selectedItemInGroupList();
+        });
+        function selectedItemInGroupList(){
+      
+            //alert("HELLO " + @Model.GroupId);
+            //alert("RES " +@Model.GroupId.HasValue);
+            alert(@Model.GroupId.ToString());
+            //if(!@Model.GroupId.HasValue.ToString() == "False")
+           // {
+           //     document.getElementById("0").onselect; 
+           // }
+            //else
+           // {
+                document.getElementById("${@Model.GroupId}").onselect;
+            //}
+     
+        }
+
+    </script>
+}

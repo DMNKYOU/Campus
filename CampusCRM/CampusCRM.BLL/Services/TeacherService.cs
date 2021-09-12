@@ -5,7 +5,7 @@ using CampusCRM.BLL.Interfaces;
 using CampusCRM.BLL.ModelsDTO;
 using CampusCRM.DAL.Entities;
 using CampusCRM.DAL.Interfaces;
-
+using System.Threading.Tasks;
 
 namespace CampusCRM.BLL.Services
 {
@@ -19,51 +19,53 @@ namespace CampusCRM.BLL.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public void Add(TeacherDTO teacherDto)
+
+        public async Task<List<TeacherDTO>> GetAllAsync()
         {
-            if (teacherDto == null)
-                throw new ArgumentException();
-
-            var teacher = _mapper.Map<Teacher>(teacherDto);
-
-            _unitOfWork.Teachers.Create(teacher);
-            _unitOfWork.Save();
+            var teachers = await _unitOfWork.Teachers.GetAllAsync();
+            return _mapper.Map<IEnumerable<Teacher>, List<TeacherDTO>>(teachers);
         }
 
-        public void Edit(TeacherDTO teacherDto)
+        public async Task<TeacherDTO> GetByIdAsync(int id)
         {
-            if (teacherDto == null)
-                throw new ArgumentException();
-
-            var teacher = _mapper.Map<Teacher>(teacherDto);
-
-            _unitOfWork.Teachers.Update(teacher);
-            _unitOfWork.Save();
-        }
-
-        public TeacherDTO GetById(int id)
-        {
-            var teacher = _unitOfWork.Teachers.Get(id);
+            var teacher = await _unitOfWork.Teachers.GetAsync(id);
 
             return _mapper.Map<TeacherDTO>(teacher);
         }
 
-        public IEnumerable<TeacherDTO> GetAll()
+        public async Task AddAsync(TeacherDTO teacherDto)
         {
-            var teachers = _unitOfWork.Teachers.GetAll();
-            return _mapper.Map<IEnumerable<Teacher>, IEnumerable<TeacherDTO>>(teachers);
+            if (teacherDto == null)
+                throw new ArgumentException();
+
+            var teacher = _mapper.Map<Teacher>(teacherDto);
+
+            await _unitOfWork.Teachers.CreateAsync(teacher);
+            //_unitOfWork.Save();
         }
 
-        public void Delete(int id)
+        public async Task EditAsync(TeacherDTO teacherDto)
         {
-            _unitOfWork.Teachers.Delete(id);
-            _unitOfWork.Save();
-        }
+            if (teacherDto == null)
+                throw new ArgumentException();
 
+            var teacher = _mapper.Map<Teacher>(teacherDto);
 
+            await _unitOfWork.Teachers.UpdateAsync(teacher);
+            //_unitOfWork.Save();
+        }  
+        
+       
+        public async Task DeleteAsync(int id)
+        {
+            await _unitOfWork.Teachers.DeleteAsync(id);
+            //_unitOfWork.Save();
+        } 
+        
         public void Dispose()
         {
             _unitOfWork.Dispose();
         }
+
     }
 }

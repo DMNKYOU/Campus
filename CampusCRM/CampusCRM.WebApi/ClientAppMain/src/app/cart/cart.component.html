@@ -1,0 +1,68 @@
+<div class="cart">
+    <h1 class="text-left padded-txt">Shopping Cart</h1>
+
+    <!-- Cart -->
+    <div *ngIf="cart.count">
+        <!-- Cart Headings -->
+        <div class="row">
+            <div class="col-sm-6">
+                <p class="bold padded-txt">Product</p>
+            </div>
+            <div class="col-sm-4">
+                <p class="bold">Quantity</p>
+            </div>
+            <div class="col-sm-2">
+                <p class="bold">Price</p>
+            </div>
+        </div>
+        <!-- End Cart Headings -->
+        <div *ngFor="let item of cart.items">
+            <div class="row">
+                <div class="col-sm-3">
+                    <img class="img-responsive padded-img" src="{{item.product.images[0]}}" alt="Card image cap">
+                </div>
+                <div class="col-sm-3">
+                    <p class="bold padded-prod-name">{{item.product.name}}</p>
+                    <p class="faint">Product Code: {{item.product._id}}</p>
+                    <p>Size: {{item.product.sizes}}</p>
+                </div>
+                <div class="col-sm-4 row">
+                    <button type="button" class="btn btn-default btn-sm col-md-1" (click)="addProduct(item.product)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                    <p class="padded-prod-name col-md-1">{{item.count}}</p>
+                    <button type="button" class="btn btn-default btn-sm col-md-1" (click)="removeProduct(item.product)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </div>
+                <div class="col-sm-2">
+                    <p class="padded-prod-name">{{item.product.price}}</p>
+                </div>
+            </div>
+            <br/>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="total-cart pull-xs-right">
+                    <p class="text-right bold subtotal">SUBTOTAL: {{cart.totalCost | currency:'eur':true:'1.2-2'}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="emty-cart" *ngIf="!cart.count">
+        <p class="padded-txt">Your cart is empty!</p>
+        <p class="padded-txt">Continue shopping to find something you like</p>
+    </div>
+
+    <div>
+        <div *ngIf="cart.count" class="button-left">
+            <button class="btn btn-default btn-lg btn-block btn-inverse" (click)="clearCart()">Clear Cart</button>
+        </div>
+        <div class="button-right">
+            <a [routerLink]="['/products']" class="btn btn-primary btn-lg btn-block btnblack">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Continue Shopping</a>
+            <button class="btn btn-default btn-lg btn-block btn-inverse" (click)="openCheckout()">Checkout</button>
+        </div>
+    </div>
+</div>
+<!-- End Cart Items -->

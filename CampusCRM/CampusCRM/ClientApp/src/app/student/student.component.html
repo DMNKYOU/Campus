@@ -1,0 +1,53 @@
+<h1 id="tableLabel">Students</h1>
+
+
+<div class="form-group row">
+    <label for="inputName" class="col-sm-1 col-form-label">Name</label>
+    <div class="col-sm-3">
+      <input class="form-control" id="inputName" [(ngModel)] = "studentName" placeholder="Search">
+    </div>
+ </div>
+
+<p *ngIf="!students"><em>Loading...</em></p>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="students">
+  <thead>
+    <tr>
+      <th>
+          Id
+          <div class="btn-group-vertical ml-1" role="group" aria-label="Vertical button group">
+            <button type="button" class="btn-sort" (click)="sort('id', true)"><i class="fas fa-sort-up sort-arrow"></i></button>
+            <button type="button" class="btn-sort" (click)="sort('id', false)"><i class="fas fa-sort-down sort-arrow"></i></button>
+          </div>
+      </th>
+      <th>
+          Name
+          <div class="btn-group-vertical ml-1" role="group" aria-label="Vertical button group">
+            <button type="button" class="btn-sort" (click)="sort('name', true)"><i class="fas fa-sort-up sort-arrow"></i></button>
+            <button type="button" class="btn-sort" (click)="sort('name', false)"><i class="fas fa-sort-down sort-arrow"></i></button>
+          </div>
+      </th>
+      <th>
+          Surname
+          <div class="btn-group-vertical ml-1" role="group" aria-label="Vertical button group">
+            <button type="button" class="btn-sort" (click)="sort('surname', true)"><i class="fas fa-sort-up sort-arrow"></i></button>
+            <button type="button" class="btn-sort" (click)="sort('surname', false)"><i class="fas fa-sort-down sort-arrow"></i></button>
+          </div>
+      </th>
+      <th>
+          Age
+          <div class="btn-group-vertical ml-1" role="group" aria-label="Vertical button group">
+            <button type="button" class="btn-sort" (click)="sort('age', true)"><i class="fas fa-sort-up sort-arrow"></i></button>
+            <button type="button" class="btn-sort" (click)="sort('age', false)"><i class="fas fa-sort-down sort-arrow"></i></button>
+          </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of students| filter: studentName">
+      <td>{{ student.id }}</td>
+      <td>{{ student.name }}</td>
+      <td>{{ student.surname }}</td>
+      <td>{{ student.age }}</td>
+    </tr>
+  </tbody>
+</table>

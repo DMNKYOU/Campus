@@ -19,6 +19,50 @@ namespace CampusCRM.DAL.Migrations
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("CampusCRM.DAL.Entities.Course", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Program")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TopicId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TopicId");
+
+                    b.ToTable("Courses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "CourseDescription1",
+                            Program = "CourseProgram1",
+                            Title = "CourseTitle1",
+                            TopicId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "CourseDescription2",
+                            Program = "CourseProgram2",
+                            Title = "CourseTitle2",
+                            TopicId = 2
+                        });
+                });
+
             modelBuilder.Entity("CampusCRM.DAL.Entities.Group", b =>
                 {
                     b.Property<int>("Id")
@@ -26,16 +70,24 @@ namespace CampusCRM.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TeacherId")
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("TeacherId");
 
@@ -45,15 +97,19 @@ namespace CampusCRM.DAL.Migrations
                         new
                         {
                             Id = 10,
+                            CourseId = 1,
                             Name = "IOS",
                             StartDate = new DateTime(2021, 9, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
                             TeacherId = 10
                         },
                         new
                         {
                             Id = 11,
+                            CourseId = 1,
                             Name = "Front-end",
                             StartDate = new DateTime(2021, 10, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
                             TeacherId = 11
                         });
                 });
@@ -68,7 +124,7 @@ namespace CampusCRM.DAL.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("GroupId")
+                    b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -99,6 +155,71 @@ namespace CampusCRM.DAL.Migrations
                             GroupId = 10,
                             Name = "Tanya",
                             Surname = "Petrachko"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Age = 22,
+                            Name = "Oksana",
+                            Surname = "Kiurd"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Age = 24,
+                            Name = "Larisa",
+                            Surname = "Jiop"
+                        });
+                });
+
+            modelBuilder.Entity("CampusCRM.DAL.Entities.StudentRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Comment = "I want to learn!",
+                            CourseId = 1,
+                            StartDate = new DateTime(2021, 9, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Status = 0,
+                            StudentId = 12
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Comment = "I want to gain new knowledge!",
+                            CourseId = 1,
+                            StartDate = new DateTime(2021, 9, 14, 0, 0, 0, 0, DateTimeKind.Local),
+                            Status = 0,
+                            StudentId = 13
                         });
                 });
 
@@ -144,6 +265,38 @@ namespace CampusCRM.DAL.Migrations
                         });
                 });
 
+            modelBuilder.Entity("CampusCRM.DAL.Entities.Topic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Topics");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "CourseDescription1",
+                            Title = "TopicTitle1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "TopicDescription2",
+                            Title = "TopicTitle2"
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -169,20 +322,6 @@ namespace CampusCRM.DAL.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8a7e2273-cee3-4aa3-968d-49dc7e8e1139",
-                            ConcurrencyStamp = "c36fa948-a2ed-4949-bcc8-339ea2000f26",
-                            Name = "admin"
-                        },
-                        new
-                        {
-                            Id = "f95c9a2d-b8c2-45db-be36-96d9db46a2ff",
-                            ConcurrencyStamp = "7fc8bc5c-27c8-49e0-a222-1104990b9c12",
-                            Name = "manager"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -358,13 +497,30 @@ namespace CampusCRM.DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("CampusCRM.DAL.Entities.Group", b =>
+            modelBuilder.Entity("CampusCRM.DAL.Entities.Course", b =>
                 {
-                    b.HasOne("CampusCRM.DAL.Entities.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId")
+                    b.HasOne("CampusCRM.DAL.Entities.Topic", "Topic")
+                        .WithMany("Courses")
+                        .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Topic");
+                });
+
+            modelBuilder.Entity("CampusCRM.DAL.Entities.Group", b =>
+                {
+                    b.HasOne("CampusCRM.DAL.Entities.Course", "Course")
+                        .WithMany("Groups")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CampusCRM.DAL.Entities.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId");
+
+                    b.Navigation("Course");
 
                     b.Navigation("Teacher");
                 });
@@ -373,11 +529,28 @@ namespace CampusCRM.DAL.Migrations
                 {
                     b.HasOne("CampusCRM.DAL.Entities.Group", "Group")
                         .WithMany("Students")
-                        .HasForeignKey("GroupId")
+                        .HasForeignKey("GroupId");
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("CampusCRM.DAL.Entities.StudentRequest", b =>
+                {
+                    b.HasOne("CampusCRM.DAL.Entities.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Group");
+                    b.HasOne("CampusCRM.DAL.Entities.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -431,9 +604,19 @@ namespace CampusCRM.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CampusCRM.DAL.Entities.Course", b =>
+                {
+                    b.Navigation("Groups");
+                });
+
             modelBuilder.Entity("CampusCRM.DAL.Entities.Group", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("CampusCRM.DAL.Entities.Topic", b =>
+                {
+                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

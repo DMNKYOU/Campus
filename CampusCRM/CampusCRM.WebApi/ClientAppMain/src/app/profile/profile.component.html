@@ -1,0 +1,39 @@
+<div class="user" *ngIf="user">
+  <div class="image">
+    <img class="brand" src='../assets/images/profileLogo.png' alt="logo">
+  </div>
+  
+<table class="container">
+  <thead>
+    <tr>
+      <th>
+        <h1>{{user.username}}</h1>
+      </th>
+      <th>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Email</td>
+      <td>{{user.email}}</td>
+    </tr>
+    <tr>
+      <td>Address</td>
+      <td>{{user.address}}</td>
+    </tr>
+    <tr>
+      <td>City</td>
+      <td>{{user.city}}</td>
+    </tr>
+    <tr>
+      <td>Country</td>
+      <td>{{user.country}}</td>
+    </tr>
+    <tr>
+    <td>Zip code</td>
+    <td>{{user.zip}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,50 @@
+<!-- Shopping Cart Dropdown -->
+<ul class="nav navbar-nav pull-xs-right">
+  <li class="nav-item dropdown">
+    <span class="fa fa-shopping-bag fa-3x dropdown-toggle white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <p id="count" class="text">{{ cart.count }}</p>
+    </span>
+    <div class="dropdown-menu dropdown-menu-right cart" aria-labelledby="cart">
+      <h1 class="text-center">Your Cart</h1>
+      <div *ngIf="cart.count">
+        <div class="scrollbar" id="scrollbar">
+          <div *ngFor="let item of cart.items">
+            <div class="row">
+              <div class="col-sm-5">
+                <img class="img-responsive" src="{{item.product.images[0]}}" alt="Card image cap">
+              </div>
+              <div class="col-sm-5">
+                <div class="bold">
+                  {{item.product.name}}
+                </div>
+                Quantity: {{item.count}} Price: {{item.totalCost | currency:'eur':true:'1.2-2'}}
+              </div>
+              <div class="col-sm-2">
+                <a role="button">
+                  <i class="fa fa-remove remove" (click)="removeItem(item.product)"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <br/>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="total-cart pull-xs-right">
+              <p class="text-right bold subtotal">SUBTOTAL: {{cart.totalCost | currency:'eur':true:'1.2-2'}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <a [routerLink]="['/cart-pg']" class="btn btn-primary btn-lg btn-block btnblack">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart</a>
+            <!--<a [routerLink]="['/checkout']" class="btn btn-lg btn-block btnblack">
+                          <i class="fa fa-shopping-cart" aria-hidden="true"></i> Checkout</a> -->
+          </div>
+        </div>
+      </div>
+      <div class="emty-cart" *ngIf="!cart.count">The cart is empty!</div>
+    </div>
+  </li>
+</ul>

@@ -8,9 +8,12 @@ namespace CampusCRM.DAL.Contexts
 {
     public sealed class CampusContext : IdentityDbContext
     {
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Group> Groups { get; set; }
-        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Student> Students { get; set; }// = default!;
+        public DbSet<Group> Groups { get; set; } //= default!;
+        public DbSet<Teacher> Teachers { get; set; }// = default!;
+        public DbSet<Topic> Topics { get; set; }// = default!;
+        public DbSet<Course> Courses { get; set; }// = default!;
+        public DbSet<StudentRequest> StudentRequests { get; set; }// = default!;
 
         public CampusContext(): base()
         {
@@ -31,7 +34,7 @@ namespace CampusCRM.DAL.Contexts
             //    .AddJsonFile("appsettings.json")
             //    .Build();
             // optionsBuilder.UseSqlServer(configuration.GetConnectionString("CampusConnectionStringDB"));
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusCRMDB;Trusted_Connection=True;");
+           // optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CampusCRMDB;Trusted_Connection=True;");
         }
     }
 }

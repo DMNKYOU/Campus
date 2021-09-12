@@ -4,13 +4,14 @@
 @{ ViewData["Title"] = "Students"; }
 <table class="table text-center table-striped">
     <thead class="bg-info">
-    <tr>
-        <th scope="col" class="text-light">Name</th>
-        <th scope="col" class="text-light">Surname</th>
-        <th scope="col" class="text-light">Age</th>
-        <th scope="col" class="text-light">Group</th>
-        <th scope="col" class="text-light"></th>
-    </tr>
+        <tr>
+            <th scope="col" class="text-light">Name</th>
+            <th scope="col" class="text-light">Surname</th>
+            <th scope="col" class="text-light">Age</th>
+            <th scope="col" class="text-light">Group</th>
+            <th scope="col" class="text-light"></th>
+            <th scope="col" class="text-light"></th>
+        </tr>
     </thead>
     <tbody>
     @foreach (var student in Model)
@@ -19,16 +20,26 @@
             <th scope="col">@student.Name</th>
             <th scope="col">@student.Surname</th>
             <th scope="col">@student.Age</th>
+            @if (student.GroupId.HasValue)
+            {
             <th scope="col">@student.Group.Name</th>
+            }
+            else
+            {
+                <th scope="col"></th>
+                <th scope="col">
+                    <a class="btn btn-success m-1" asp-controller="StudentRequests" asp-action="EditRequest" asp-route-studentId="@student.Id">Add request</a>
+                </th>
+            }
             @if ((await AuthorizationService.AuthorizeAsync(User, "ManageAndDevDepart")).Succeeded)
             {
-                <th scope="col">
-                    <a class="btn btn-success" asp-controller="Students" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
-                    @if (User.IsInRole("Admin"))
+            <th scope="col">
+                <a class="btn btn-success" asp-controller="Students" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
+                @if (User.IsInRole("Admin"))
                     {
-                        <a class="btn btn-danger" asp-controller="Students" asp-action="Delete" asp-route-id="@student.Id">Delete</a>
+                <a class="btn btn-danger" asp-controller="Students" asp-action="Delete" asp-route-id="@student.Id">Delete</a>
                     }
-                </th>
+            </th>
             }
         </tr>
     }
@@ -36,5 +47,5 @@
 </table>
 @if (User.IsInRole("Admin"))
 {
-    <a class="btn btn-primary" asp-controller="Students" asp-action="Add">Add new student</a>
+    <a class="btn btn-primary" asp-controller="Students" asp-action="Add" >Add new student</a>
 }

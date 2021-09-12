@@ -1,0 +1,9 @@
+.fixed {
+    margin-top: 70px;
+}
+.flash {
+    z-index: 9999999;
+    position: fixed;
+    width:30%;
+    margin-left: 70%;
+}

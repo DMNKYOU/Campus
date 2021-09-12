@@ -10,5 +10,7 @@ namespace CampusCRM.MVC.Configuration
         public const string SectionTitle = "Security";
         public string AdminUserEmail { get; set; }
         public string ManagerUserEmail { get; set; }
+
+        public string Password { get; set; }
     }
 }

@@ -1,0 +1,58 @@
+<!-- Checkout -->
+<div class="row">
+  <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+    <h1>Checkout</h1>
+    <h4>Your Total: {{cart.totalCost | currency:'eur':true:'1.2-2'}}</h4>
+    <form action="/" method="post" id="checkout-form" (submit)="getToken()">
+      <div class="row">
+        <!-- Name -->
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input [(ngModel)]="name" type="text" id="name" class="form-control" required>
+          </div>
+        </div>
+        <!-- Address -->
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input [(ngModel)]="address" type="text" id="address" class="form-control" required>
+          </div>
+        </div>
+        <hr>
+        <!-- Card Holder Name -->
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="card-name">Card Holder Name</label>
+            <input [(ngModel)]="cardName" type="text" id="card-name" class="form-control" required>
+          </div>
+        </div>
+        <!-- Card Number -->
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="card-number">Card Number</label>
+            <input [(ngModel)]="cardNumber" type="text" id="card-number" class="form-control" size="20" data-stripe="number" payments-validate="card"
+              payments-format="card">
+          </div>
+        </div>
+        <!-- Expiration Month -->
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label>
+              <span>Expiration (MM/YY)</span>
+            </label>
+            <input [(ngModel)]="expiry" name="expiry" type="text" size="2" payments-validate="expiry" payments-format="expiry">
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="card-cvc">CVC</label>
+            <input [(ngModel)]="cvc" type="text" id="card-cvc" class="form-control" payments-validate="cvc" payments-type-model="type"
+              payments-format="cvc">
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success">Submit Payment</button>
+    </form>
+  </div>
+</div>

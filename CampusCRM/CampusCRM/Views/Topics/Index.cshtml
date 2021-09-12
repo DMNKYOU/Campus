@@ -1,0 +1,33 @@
+﻿@model List<TopicModel>
+@{
+    ViewData["Title"] = "Topics";
+}
+
+<table class="table text-center table-striped">
+    <h1>Topics</h1>
+    <thead class="bg-info">
+    <tr>
+    <th scope="col">Title</th>
+    <th scope="col"></th>
+    <tr/>
+    </thead>
+    <tbody>
+    @foreach (var topic in Model)
+    {
+        <tr>
+            <th scope="col">@topic.Title</th>
+            <th scope="col" class="text-center">
+                <a class="btn btn-success m-1" asp-controller="Topics" asp-action="Edit" asp-route-id="@topic.Id">
+                    Edit
+                </a>
+                <a class="btn btn-danger m-1" asp-controller="Topics" asp-action="Delete" asp-route-id="@topic.Id">
+                    Delete
+                </a>
+            </th>
+        </tr>
+    }
+    </tbody>
+</table>
+<div>
+    <a class="btn btn-primary" asp-controller="Topics" asp-action="Edit">Add new topic</a>
+</div>

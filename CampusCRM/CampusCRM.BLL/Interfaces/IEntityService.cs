@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using CampusCRM.DAL.Entities;
 
 
 namespace CampusCRM.BLL.Interfaces
 {
     public interface IEntityService<TEntity>
     {
-        IEnumerable<TEntity> GetAll();
-        TEntity GetById(int id);
-        void Add(TEntity entity);
-        void Edit(TEntity entity);
-        void Delete(int id);
-        void Dispose();
+        Task<List<TEntity>> GetAllAsync();
+        Task<TEntity> GetByIdAsync(int id);
+        Task AddAsync(TEntity entity);//
+        Task EditAsync(TEntity entity); //
+        Task DeleteAsync(int id);
+        void Dispose(); ///////////////////////////
     }
 }
