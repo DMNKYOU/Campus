@@ -3,47 +3,35 @@
     ViewData["Title"] = "Courses";
 }
 
-<div class="content">
-    <h1 class="content__header">Courses</h1>
-    <div class="containt-fluid">
-        <div class="row">
-   
-            <div >
-                <div class="card">
-                    <div class="card-header">Table</div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col" class="w-25"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var course in Model)
-                                    {
-
-                                        <tr>
-                                            <th scope="col">@course.Title</th>
-                                            <th scope="col">@course.Description</th>
-                                            <th scope="col" class="text-center">
-                                                <a class="btn btn-success m-1" asp-controller="Courses" asp-action="EditCourse" asp-route-id="@course.Id"><i class="fas fa-edit"></i></a>
-                                                <a class="btn btn-danger m-1" asp-controller="Courses" asp-action="DeleteCourse" asp-route-id="@course.Id"><i class="fas fa-trash"></i></a>
-                                            </th>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        <a class="btn btn-head" asp-controller="Courses" asp-action="EditCourse">Add new course</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-3"></div>
-        </div>
-    </div>
+<table class="table text-center table-striped">
+    <thead class="bg-info">
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col" class="w-25"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <th scope="col">@course.Title</th>
+                <th scope="col">@course.Description</th>
+                <th scope="col" class="text-center">
+                    <a class="btn btn-success m-1" asp-controller="Courses" asp-action="EditCourse" asp-route-id="@course.Id">
+                    Edit</a>
+                    <a class="btn btn-danger m-1" asp-controller="Courses" asp-action="DeleteCourse" asp-route-id="@course.Id">
+                    Delete</a>
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>                   
+    <a class="btn btn-primary" asp-controller="Courses" asp-action="EditCourse">Add new course</a>
 </div>
-
+                  
+        
+     
+   
     

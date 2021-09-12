@@ -1,71 +1,63 @@
 ﻿@using CampusCRM.BLL.ModelsDTO
 @model StudentRequestModel
 @{
-    ViewData["Title"] = $"Request";
+    ViewData["Title"] = "Request";
 }
 
-<div class="content">
-    <h1 class="content__header">Work with request</h1>
-    <div class="containt-fluid">
-        <div class="row">
-            <div class="col-xl-3"></div>
-            <div class="col-xl-6">
-                <div class="card">
-                    <div class="card-header">Request</div>
-                    <div class="card-body">
-                        <form method="post" asp-controller="StudentRequests" asp-action="EditRequest"
-                              asp-route-StudentId="@Model.Student.Id" asp-route-id="@Model.Id"
-                              asp-route-Status="@Model.Status">
+<div>
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <form method="post" asp-controller="StudentRequests" asp-action="EditRequest"
+                  asp-route-StudentId="@Model.Student.Id" asp-route-id="@Model.Id"
+                  asp-route-Status="@Model.Status">
 
-                            <div asp-validation-summary="ModelOnly"></div>
-                            <div class="mb-3 row">
-                                <label class="col-sm-3 col-form-label">Student</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="@Model.Student.Name @Model.Student.Surname" readonly />
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label asp-for="StartDate" class="col-sm-3 col-form-label"></label>
-                                <div class="col-sm-9">
-                                    <input class="form-control" type="date" asp-for="StartDate" />
-                                    <span asp-validation-for="StartDate" class="alert-danger"></span>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label asp-for="Comments" class="col-sm-3 col-form-label"></label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control" rows="3" asp-for="Comments"></textarea>
-                                    <span asp-validation-for="Comments" class="alert-danger"></span>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label asp-for="CourseId" class="col-sm-3 col-form-label"></label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" asp-for="CourseId">
-                                        @foreach (var course in (List<CourseDTO>)ViewBag.Courses)
-                                        {
-                                            if (Model != null && course.Id == Model.CourseId)
-                                            {
-                                                <option value="@course.Id" selected>@course.Title</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@course.Id">@course.Title</option>
-                                            }
-                                        }
-                                    </select>
-                                    <span asp-validation-for="CourseId" class="alert-danger"></span>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-success">Ok</button>
-                        </form>
+                <div asp-validation-summary="ModelOnly"></div>
+                <div class="mb-3 row">
+                    <label class="col-sm-3 col-form-label">Student</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="text" value="@Model.Student.Name @Model.Student.Surname" readonly/>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-3"></div>
+                <div class="mb-3 row">
+                    <label asp-for="StartDate" class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-9">
+                        <input class="form-control" type="date" asp-for="StartDate"/>
+                        <span asp-validation-for="StartDate" class="alert-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label asp-for="Comments" class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" rows="3" asp-for="Comments"></textarea>
+                        <span asp-validation-for="Comments" class="alert-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label asp-for="CourseId" class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-9">
+                        <select class="form-control" asp-for="CourseId">
+                            @foreach (var course in (List<CourseDTO>)ViewBag.Courses)
+                            {
+                                if (Model != null && course.Id == Model.CourseId)
+                                {
+                                    <option value="@course.Id" selected>@course.Title</option>
+                                }
+                                else
+                                {
+                                    <option value="@course.Id">@course.Title</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="CourseId" class="alert-danger"></span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Ok</button>
+            </form>
         </div>
     </div>
 </div>
+
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial.cshtml")
