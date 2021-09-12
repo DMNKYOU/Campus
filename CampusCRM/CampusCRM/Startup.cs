@@ -19,6 +19,7 @@ using CampusCRM.Mail.Interfaces;
 using CampusCRM.MVC.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 namespace CampusCRM.MVC
 {
@@ -43,19 +44,27 @@ namespace CampusCRM.MVC
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
 
-           // services.AddDbContext<CampusContext>();
+            // services.AddDbContext<CampusContext>();
             services.AddDbContext<CampusContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("CampusConnectionStringDB")));
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<CampusContext>();
+       
 
             services.AddDefaultIdentity<IdentityUser>(
                     options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CampusContext>();
+
+            //services.AddIdentity<IdentityUser, IdentityRole>(
+            //        options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddDefaultUI()
+            //    .AddEntityFrameworkStores<CampusContext>()
+            //    .AddDefaultTokenProviders();
 
             services.AddAuthorization(options =>
             {
@@ -71,8 +80,15 @@ namespace CampusCRM.MVC
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<ITeacherService, TeacherService>();
+            
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<ITeacherService, TeacherService>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<ITopicService, TopicService>();
+            services.AddScoped<IStudentRequestService, StudentRequestService>();
 
-           // services.AddTransient<IMailService, EmailService>();
+            // services.AddTransient<IMailService, EmailService>();
 
             EmailSettingsModel emailSettings = new EmailSettingsModel();
             Configuration.GetSection("EmailSettings").Bind(emailSettings);
@@ -80,14 +96,16 @@ namespace CampusCRM.MVC
             services.AddSingleton(emailService);
             services.Configure<SecurityOptions>(
                 Configuration.GetSection(SecurityOptions.SectionTitle));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions,ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
             }
             else
             {
@@ -102,6 +120,8 @@ namespace CampusCRM.MVC
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            loggerFactory.AddFile($"Logs/log.txt");
 
             app.UseEndpoints(endpoints =>
             {

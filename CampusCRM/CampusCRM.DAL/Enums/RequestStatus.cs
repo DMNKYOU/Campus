@@ -1,6 +1,8 @@
 ﻿namespace CampusCRM.DAL.Enums
 {
-    public class RequestStatus
+    public enum RequestStatus
     {
+        Open,
+        Closed
     }
 }

@@ -17,6 +17,15 @@ namespace CampusCRM.DAL.Repositories
         {
             _context = context;
         }
+        public Task<Topic> GetAsync(int id)
+        {
+            return _context.Topics.FirstOrDefaultAsync(t => t.Id == id);
+        }
+
+        public Task<List<Topic>> GetAllAsync()
+        {
+            return _context.Topics.ToListAsync();
+        }
 
         public async Task CreateAsync(Topic item)
         {
@@ -29,25 +38,15 @@ namespace CampusCRM.DAL.Repositories
             var topic = await _context.Topics.FindAsync(id);
 
             if (topic == null)
-                throw new ArgumentException("Error! Topic not found!");
+                throw new ArgumentException("Error! Topic not deleted, because not found!");
 
             _context.Topics.Remove(topic);
             await _context.SaveChangesAsync();
         }
 
-        public IEnumerable<Topic> Find(Func<Topic, bool> predicate)
+        public IEnumerable<Topic> Find(Func<Topic, bool> predicate)///////////////////////////////////////////////////////////
         {
-            return _context.Topics.Where(predicate).ToList();
-        }
-
-        public Task<Topic> GetAsync(int id)
-        {
-            return _context.Topics.FirstOrDefaultAsync(t => t.Id == id);
-        }
-
-        public Task<List<Topic>> GetAllAsync()
-        {
-            return _context.Topics.ToListAsync();
+            return _context.Topics.AsEnumerable().Where(predicate).ToList();
         }
 
         public async Task UpdateAsync(Topic item)

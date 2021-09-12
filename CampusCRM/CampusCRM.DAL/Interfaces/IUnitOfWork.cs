@@ -7,9 +7,13 @@ namespace CampusCRM.DAL.Interfaces
 {
     public interface IUnitOfWork
     {
-        IRepository<Student> Students { get; }
-        IRepository<Group> Groups { get; }
-        IRepository<Teacher> Teachers { get; }
+        IRepositoryAsync<Student> Students { get; }
+        IRepositoryAsync<Group> Groups { get; }
+        IRepositoryAsync<Teacher> Teachers { get; }
+        IRepositoryAsync<StudentRequest> StudentRequests { get; }
+        IRepositoryAsync<Topic> Topics { get; }
+        IRepositoryAsync<Course> Courses { get; }
+
         void Save();
         void Dispose();
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using CampusCRM.BLL.ModelsDTO;
 using CampusCRM.DAL.Entities;
 
@@ -14,5 +15,8 @@ namespace CampusCRM.BLL.Interfaces
         //StudentDTO GetStudent(int id);
         //IEnumerable<StudentDTO> GetStudents();
         //void Dispose();
+        Task DeleteStudentFromGroupAsync(int groupId);
+        Task AddStudentToGroupAsync(int studentId, int groupId);
+
     }
 }

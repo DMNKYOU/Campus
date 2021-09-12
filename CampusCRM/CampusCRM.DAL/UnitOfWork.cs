@@ -11,9 +11,15 @@ namespace CampusCRM.DAL
 
         private StudentsRepository _studentsRepository;
 
-        private GroupRepository _groupsRepository;
+        private GroupsRepository _groupsRepository;
 
-        private TeacherRepository _teachersRepository;
+        private TeachersRepository _teachersRepository;
+
+        private TopicsRepository _topicsRepository;
+
+        private StudentRequestsRepository _studentrequestsRepository;
+
+        private CoursesRepository _coursesRepository;
 
         private bool _dispose = false;
 
@@ -23,29 +29,29 @@ namespace CampusCRM.DAL
             _context = context;
         }
 
-        public IRepository<Teacher> Teachers
+        public IRepositoryAsync<Teacher> Teachers ////////////////////////////////////////////////
         {
             get
             {
                 if (_teachersRepository == null)
-                    _teachersRepository = new TeacherRepository(_context);
+                    _teachersRepository = new TeachersRepository(_context);
 
                 return _teachersRepository;
             }
         }
 
-        public IRepository<Group> Groups
+        public IRepositoryAsync<Group> Groups ////////////////////////////////////////////////
         {
             get
             {
                 if (_groupsRepository == null)
-                    _groupsRepository = new GroupRepository(_context);
+                    _groupsRepository = new GroupsRepository(_context);
 
                 return _groupsRepository;
             }
         }
 
-        public IRepository<Student> Students
+        public IRepositoryAsync<Student> Students ////////////////////////////////////////////////
         {
             get
             {
@@ -53,6 +59,39 @@ namespace CampusCRM.DAL
                     _studentsRepository = new StudentsRepository(_context);
 
                 return _studentsRepository;
+            }
+        }
+
+        public IRepositoryAsync<Course> Courses
+        {
+            get
+            {
+                if (_coursesRepository == null)
+                    _coursesRepository = new CoursesRepository(_context);
+
+                return _coursesRepository;
+            }
+        }
+
+        public IRepositoryAsync<Topic> Topics
+        {
+            get
+            {
+                if (_topicsRepository == null)
+                    _topicsRepository = new TopicsRepository(_context);
+
+                return _topicsRepository;
+            }
+        }
+
+        public IRepositoryAsync<StudentRequest> StudentRequests
+        {
+            get
+            {
+                if (_studentrequestsRepository == null)
+                    _studentrequestsRepository = new StudentRequestsRepository(_context);
+
+                return _studentrequestsRepository;
             }
         }
         public void Save()

@@ -1,0 +1,97 @@
+﻿@using CampusCRM.BLL.Enums
+@using CampusCRM.BLL.ModelsDTO
+@model GroupModel
+@{
+    ViewData["Title"] = "Group";
+}
+<div class="content">
+    <h1 class="content__header">Work with group</h1>
+    <div class="containt-fluid">
+        <div class="row">
+            <div class="col-xl-3"></div>
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header">Group</div>
+                    <div class="card-body">
+                        <form method="post" asp-controller="Groups" asp-action="EditGroup" asp-route-id="@Model.Id">
+                            @Html.HiddenFor(g => g.Id)
+                            <div class="mb-3 row">
+                                <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" asp-for="Name" />
+                                    <span asp-validation-for="Name" class="alert-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label asp-for="StartDate" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="date" asp-for="StartDate" />
+                                    <span asp-validation-for="StartDate" class="alert-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label asp-for="Status" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" asp-for="Status" asp-items="Html.GetEnumSelectList<GroupStatus>()">
+                                        <option value="">Select status</option>
+                                    </select>
+                                    <span asp-validation-for="Status" class="alert-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label asp-for="TeacherId" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" asp-for="TeacherId">
+                                        @foreach (var teacher in (List<TeacherDTO>)ViewBag.Teachers)
+                                        {
+
+                                            if (Model != null && teacher.Id == Model.TeacherId)
+                                            {
+                                                <option value="@teacher.Id" selected>@teacher.Name @teacher.Surname</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@teacher.Id">@teacher.Name @teacher.Surname</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="TeacherId" class="alert-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label asp-for="CourseId" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" asp-for="CourseId">
+                                        <option value="">Select course</option>
+                                        @foreach (var course in (List<CourseDTO>)ViewBag.Courses)
+                                        {
+
+                                            if (Model != null && course.Id == Model.CourseId)
+                                            {
+                                                <option value="@course.Id" selected>@course.Title</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@course.Id">@course.Title</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="TeacherId" class="alert-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3 row" id="students">
+                            </div>
+                            <button type="submit" class="btn btn-success">Ok</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial.cshtml")
+    <script src="~/js/getStudentsByCourse.js"></script>
+}

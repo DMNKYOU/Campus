@@ -9,8 +9,8 @@ namespace CampusCRM.BLL.Interfaces
     {
         Task<List<TEntity>> GetAllAsync();
         Task<TEntity> GetByIdAsync(int id);
-        Task Add(TEntity entity);
-        Task Edit(TEntity entity); 
+        Task AddAsync(TEntity entity);//
+        Task EditAsync(TEntity entity); //
         Task DeleteAsync(int id);
         void Dispose(); ///////////////////////////
     }

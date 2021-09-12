@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model List<GroupModel>
+@{
+    ViewData["Title"] = "Groups";
+}
+
+<div class="content">
+    <h1>Groups</h1>
+    <table class="table text-center table-striped">
+        <thead class="bg-info">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Start date</th>
+            <th scope="col">Teacher</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var group in Model)
+        {
+            <tr>
+                <th scope="col">@group.Name</th>
+                <th scope="col">@group.StartDate.ToString("dd.MM.yyyy")</th>
+                <th scope="col">@group.Teacher.Name @group.Teacher.Surname</th>
+                @*@if (User.IsInRole("Admin") || User.IsInRole("Manager"))*@
+                @if ((await AuthorizationService.AuthorizeAsync(User, "ManageAndDevDepart")).Succeeded)
+                {
+                    <th scope="col">
+                        <a class="btn btn-success m-1" asp-controller="Groups" asp-action="Edit" asp-route-id="@group.Id">Edit</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-danger m-1" asp-controller="Groups" asp-action="Delete" asp-route-id="@group.Id">Delete</a>
+                        }
+                    </th>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-primary" asp-controller="Groups" asp-action="Add">Add new group</a>
+    }
+</div>

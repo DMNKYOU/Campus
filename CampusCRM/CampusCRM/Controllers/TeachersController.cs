@@ -1,12 +1,14 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using AutoMapper;
 using CampusCRM.BLL.Interfaces;
 using CampusCRM.BLL.ModelsDTO;
 using CampusCRM.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
-
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace CampusCRM.MVC.Controllers
 {
@@ -15,20 +17,30 @@ namespace CampusCRM.MVC.Controllers
         private readonly ITeacherService _teacherService;
 
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public TeachersController(IMapper mapper, ITeacherService teacherService)
+        public TeachersController(IMapper mapper, ITeacherService teacherService, ILogger<TeachersController> logger)
         {
             _teacherService = teacherService;
             _mapper = mapper;
+            _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            var teachers = _teacherService.GetAll();
-            var teachersDto = _mapper.Map<List<TeacherModel>>(teachers);
-
-            return View(teachersDto);
+            try
+            {
+                var teachers = await _teacherService.GetAllAsync();
+                var teachersDto = _mapper.Map<List<TeacherModel>>(teachers);
+                return View(teachersDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500);
+            }
         }
+
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
@@ -42,55 +54,91 @@ namespace CampusCRM.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public IActionResult Add(TeacherModel teacher)
+        public async Task<IActionResult> AddAsync(TeacherModel teacher)
         {
             teacher.Name = teacher.Name.Trim();
             teacher.Surname = teacher.Surname.Trim();
             if (!ModelState.IsValid)
             {
-                Debug.WriteLine($" From {ModelState.IsValid} { ModelState.Keys}");
+                Debug.WriteLine($" From {ModelState.IsValid} {ModelState.Keys}");
                 ViewData["Action"] = "Add";
                 return View("Edit", teacher);
             }
-            _teacherService.Add(_mapper.Map<TeacherDTO>(teacher));
 
-            return RedirectToAction("Index", "Teachers");
+            try
+            {
+                await _teacherService.AddAsync(_mapper.Map<TeacherDTO>(teacher));
+
+                return RedirectToAction("Index", "Teachers");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500);
+            }
         }
 
         [HttpGet]
-        [Authorize(policy: "ManageAndDevDepart")]
-        public IActionResult Edit(int id)
+        [Authorize("ManageAndDevDepart")]
+        public async Task<IActionResult> EditAsync(int id)
         {
-            var teacherDto = _teacherService.GetById(id);
-            ViewData["Action"] = "Edit";
+            try
+            {
+                var teacherDto = await _teacherService.GetByIdAsync(id);
+                ViewData["Action"] = "Edit";
 
-            return View(_mapper.Map<TeacherModel>(teacherDto));
+                return View(_mapper.Map<TeacherModel>(teacherDto));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500);
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(policy: "ManageAndDevDepart")]
-        public IActionResult Edit(TeacherModel teacher)
+        [Authorize("ManageAndDevDepart")]
+        public async Task<IActionResult> EditAsync(TeacherModel teacher)
         {
             teacher.Name = teacher.Name.Trim();
             teacher.Surname = teacher.Surname.Trim();
             if (!ModelState.IsValid)
             {
-                Debug.WriteLine($" From {ModelState.IsValid} { ModelState.Count}");
+                Debug.WriteLine($" From {ModelState.IsValid} {ModelState.Count}");
                 ViewData["Action"] = "Edit";
                 return View("Edit", teacher);
             }
-            _teacherService.Edit(_mapper.Map<TeacherDTO>(teacher));
 
-            return RedirectToAction("Index", "Teachers");
+            try
+            {
+                await _teacherService.EditAsync(_mapper.Map<TeacherDTO>(teacher));
+
+                return RedirectToAction("Index", "Teachers");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500);
+            }
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            _teacherService.Delete(id);
-            return RedirectToAction("Index", "Teachers");
+            try
+            {
+                await _teacherService.DeleteAsync(id);
+                return RedirectToAction("Index", "Teachers");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500);
+            }
         }
+
     }
 }

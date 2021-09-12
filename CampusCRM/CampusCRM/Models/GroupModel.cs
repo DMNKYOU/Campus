@@ -29,5 +29,13 @@ namespace CampusCRM.MVC.Models
 
         public TeacherModel Teacher { get; set; }
 
+        [Required]
+        public int CourseId { get; set; }
+        public CourseModel Course { get; set; }
+
+        [Required]
+        [Display(Name = "Status")]
+        public int? Status { get; set; }
+
     }
 }

@@ -1,15 +1,18 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using CampusCRM.BLL.Interfaces;
 using CampusCRM.BLL.ModelsDTO;
 using CampusCRM.DAL.Entities;
 using CampusCRM.MVC.Models;
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 
-namespace TrainingCenterCRM.Controllers
+namespace CampusCRM.MvcOptions.Controllers
 {
     public class StudentsController : Controller
     {
@@ -18,7 +21,10 @@ namespace TrainingCenterCRM.Controllers
         private readonly IGroupService _groupService;
 
         private readonly IMapper _mapper;
-        public StudentsController(IMapper _mapper, IGroupService _groupService, IStudentService _studentService)
+
+        private readonly ILogger _logger;
+
+        public StudentsController(IMapper _mapper, IGroupService _groupService, IStudentService _studentService, ILogger<StudentsController> logger)
         {
             this._mapper = _mapper;
 
@@ -27,20 +33,30 @@ namespace TrainingCenterCRM.Controllers
         }
 
         // GET: StudentsController
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            var students = _studentService.GetAll();
-            var studentsDto = _mapper.Map<IEnumerable<StudentDTO>, List<StudentModel>>(students);
+            try
+            {
+                var students = await _studentService.GetAllAsync();
+               var resList = _mapper.Map<List<StudentDTO>, List<StudentModel>>(students);
 
-            return View(studentsDto);
+                return View(resList);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500);
+            }
         }
 
+        
+        // GET: StudentsController/Edit/5
+        
         // GET: StudentsController/Add
         [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public IActionResult Add()
+        public async Task<IActionResult> AddAsync()
         {
-            var groups = _groupService.GetAll();
+            var groups = await _groupService.GetAllAsync();
             ViewBag.Groups = _mapper.Map<IEnumerable<GroupDTO>, List<GroupModel>>(groups);
             ViewData["Action"] = "Add";
 
@@ -51,62 +67,100 @@ namespace TrainingCenterCRM.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public IActionResult Add(StudentModel student)
+        public async Task<IActionResult> AddAsync(StudentModel student)
         {
             student.Name = student.Name.Trim();
             student.Surname = student.Surname.Trim();
             if (!ModelState.IsValid)
             {
-                Debug.WriteLine($" From {ModelState.IsValid} { ModelState.Count}");
-                var groups = _groupService.GetAll();
+               // Debug.WriteLine($" From {ModelState.IsValid} { ModelState.Count}");
+                var groups = await _groupService.GetAllAsync();
                 ViewBag.Groups = _mapper.Map<IEnumerable<GroupDTO>, List<GroupModel>>(groups);
                 ViewData["Action"] = "Add";
                 return View("Edit",student);
             }
-            _studentService.Add(_mapper.Map<StudentDTO>(student));
+            await _studentService.AddAsync(_mapper.Map<StudentDTO>(student));
 
             return RedirectToAction("Index", "Students");
         }
 
-        // GET: StudentsController/Edit/5
         [HttpGet]
         [Authorize(policy: "ManageAndDevDepart")]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> EditAsync(int? id)
         {
-            var student = _studentService.GetById(id);
-            var groups = _groupService.GetAll();
-            ViewBag.Groups = _mapper.Map<IEnumerable<GroupDTO>, List<GroupModel>>(groups);
-            ViewData["Action"] = "Edit";
+            try
+            {
+                var studentModel = id.HasValue
+                    ? _mapper.Map<StudentModel>(await _studentService.GetByIdAsync(id.Value))
+                    : new StudentModel();
 
-            return View(_mapper.Map<StudentModel>(student));
+                ViewBag.Groups = _mapper.Map<List<GroupDTO>, List<GroupModel>>(await _groupService.GetAllAsync());
+                ViewData["Action"] = "Edit";
+
+                return View(studentModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500);
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(policy: "ManageAndDevDepart")]
-        public IActionResult Edit(StudentModel student)
+        public async Task<IActionResult> EditAsync(StudentModel studentModel)
         {
-            student.Name = student.Name.Trim();
-            student.Surname = student.Surname.Trim();
-            if (!ModelState.IsValid)
+            try
             {
-                //Debug.WriteLine($" From {ModelState.IsValid} { ModelState.Count}");
-                var groups = _groupService.GetAll();
-                ViewBag.Groups = _mapper.Map<IEnumerable<GroupDTO>, List<GroupModel>>(groups);
-                ViewData["Action"] = "Edit";
-                return View(student);
+                //Debug.WriteLine($"RESAULT groupID in student = {studentModel.GroupId}");
+                //Debug.WriteLine($"RESAULT IsValid= {ModelState.IsValid}");
+                studentModel.Name = studentModel.Name.Trim();
+                studentModel.Surname = studentModel.Surname.Trim();
+
+                if (!ModelState.IsValid)
+                {
+                    //Debug.WriteLine($" From {ModelState.IsValid} { ModelState.Count}");
+                    var groups = await _groupService.GetAllAsync();
+                    ViewBag.Groups = _mapper.Map<IEnumerable<GroupDTO>, List<GroupModel>>(groups);
+                    ViewData["Action"] = "Edit";
+                    return View(studentModel);
+                }
+
+                var student = _mapper.Map<StudentDTO>(studentModel);
+
+                if (student.Id == 0)
+                {                                                            //для ролей сделаю в отедльном/////////////////////
+                    await _studentService.AddAsync(student);
+                }
+                else
+                {
+                    await _studentService.EditAsync(student);
+                    // throw new Exception(); тест
+                }
+
+                return RedirectToAction("Index", "Students");
             }
-            _studentService.Edit(_mapper.Map<StudentDTO>(student));
-
-            return RedirectToAction("Index", "Students");
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500);
+            }
         }
-
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            _studentService.Delete(id);
-            return RedirectToAction("Index", "Students");
+            try
+            {
+                await _studentService.DeleteAsync(id);
+                return RedirectToAction("Index", "Students");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return StatusCode(500);
+            }
         }
     }
 }

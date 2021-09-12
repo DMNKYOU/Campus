@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using CampusCRM.BLL.ModelsDTO;
 using CampusCRM.BLL.Interfaces;
 using CampusCRM.DAL;
@@ -20,45 +22,70 @@ namespace CampusCRM.BLL.Services
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        public void Add(StudentDTO studentDto)
+
+        public async Task<List<StudentDTO>> GetAllAsync()
         {
-            if (studentDto == null)
-                throw new ArgumentException();
-
-            var student = _mapper.Map<Student>(studentDto);
-
-            _unitOfWork.Students.Create(student);
-            _unitOfWork.Save();
+            var students = await _unitOfWork.Students.GetAllAsync();
+            return _mapper.Map<IEnumerable<Student>, List<StudentDTO>>(students);
         }
-        public void Edit(StudentDTO studentDto)
-        {
-            if (studentDto == null)
-                throw new ArgumentException();
 
-            var student = _mapper.Map<Student>(studentDto);
-
-            _unitOfWork.Students.Update(student);
-            _unitOfWork.Save();
-        }
-        public void Delete(int id)
+        public async Task<StudentDTO> GetByIdAsync(int id)
         {
-            _unitOfWork.Students.Delete(id);
-            _unitOfWork.Save();
-        }
-        public StudentDTO GetById(int id)
-        {
-            var student = _unitOfWork.Students.Get(id);
+            var student =await _unitOfWork.Students.GetAsync(id);
 
             return _mapper.Map<StudentDTO>(student);
         }
-        public IEnumerable<StudentDTO> GetAll() /////DTO var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Student, StudentDTO>()).CreateMapper();
+
+        public async Task AddAsync(StudentDTO studentDto)
         {
-            var students = _unitOfWork.Students.GetAll();
-            return _mapper.Map<IEnumerable<Student>, IEnumerable<StudentDTO>>(students);
+            if (studentDto == null)
+                throw new ArgumentException();
+
+            var student = _mapper.Map<Student>(studentDto);
+
+            await _unitOfWork.Students.CreateAsync(student);
+           // _unitOfWork.Save();
         }
+
+        public async Task EditAsync(StudentDTO studentDto)
+        {
+            if (studentDto == null)
+                throw new ArgumentException();
+
+            var student = _mapper.Map<Student>(studentDto);
+
+            await _unitOfWork.Students.UpdateAsync(student);
+            //_unitOfWork.Save();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            await _unitOfWork.Students.DeleteAsync(id);
+            //_unitOfWork.Save();
+        }
+        public async Task DeleteStudentFromGroupAsync(int studentId)
+        {
+            var student = await _unitOfWork.Students.GetAsync(studentId);
+            student.GroupId = null;
+            //Debug.WriteLine($"{student.GroupId.HasValue}  {student.Group}");
+            await _unitOfWork.Students.UpdateAsync(student);
+        }
+
+        public async Task AddStudentToGroupAsync(int studentId, int groupId)
+        {
+            var student = await _unitOfWork.Students.GetAsync(studentId);
+
+            if (student.GroupId != groupId)
+            {
+                student.GroupId = groupId;
+                await _unitOfWork.Students.UpdateAsync(student);
+            }
+        }
+
         public void Dispose()
         {
             _unitOfWork.Dispose();
         }
+
     }
 }

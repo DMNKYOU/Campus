@@ -1,0 +1,46 @@
+﻿@model List<CampusCRM.MVC.Models.TopicModel>
+@{
+    ViewData["Title"] = "Topics";
+}
+
+<div class="content">
+    <h1 class="content__header">Topics</h1>
+    <div class="">
+        <div class="row">
+            <div class=""></div>
+            <div class="">
+                <div class="card">
+                    <div class="card-header">Table</div>
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Title</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var topic in Model)
+                                    {
+
+                                        <tr>
+                                            <th scope="col">@topic.Title</th>
+                                            <th scope="col" class="text-center">
+                                                <a class="btn btn-success m-1" asp-controller="Topics" asp-action="EditTopic" asp-route-id="@topic.Id"><i class="fas fa-edit"></i></a>
+                                                <a class="btn btn-danger m-1" asp-controller="Topics" asp-action="DeleteTopic" asp-route-id="@topic.Id"><i class="fas fa-trash"></i></a>
+                                            </th>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <a class="btn btn-primary" asp-controller="Topics" asp-action="EditTopic">Add new topic</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-3"></div>
+        </div>
+    </div>
+</div>
