@@ -17,10 +17,10 @@
         <tr>
             <th scope="col">@topic.Title</th>
             <th scope="col" class="text-center">
-                <a class="btn btn-success m-1" asp-controller="Topics" asp-action="EditTopic" asp-route-id="@topic.Id">
+                <a class="btn btn-success m-1" asp-controller="Topics" asp-action="Edit" asp-route-id="@topic.Id">
                     Edit
                 </a>
-                <a class="btn btn-danger m-1" asp-controller="Topics" asp-action="DeleteTopic" asp-route-id="@topic.Id">
+                <a class="btn btn-danger m-1" asp-controller="Topics" asp-action="Delete" asp-route-id="@topic.Id">
                     Delete
                 </a>
             </th>
@@ -29,5 +29,5 @@
     </tbody>
 </table>
 <div>
-    <a class="btn btn-primary" asp-controller="Topics" asp-action="EditTopic">Add new topic</a>
+    <a class="btn btn-primary" asp-controller="Topics" asp-action="Edit">Add new topic</a>
 </div>

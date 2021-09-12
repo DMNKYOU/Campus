@@ -32,7 +32,7 @@
     <None Include="Views\Courses\Index.cshtml" />
     <None Include="Views\StudentRequests\EditRequest.cshtml" />
     <None Include="Views\StudentRequests\Index.cshtml" />
-    <None Include="Views\Topics\EditTopic.cshtml" />
+    <None Include="Views\Topics\Edit.cshtml" />
     <None Include="Views\Topics\Index.cshtml" />
   </ItemGroup>
 

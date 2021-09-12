@@ -12,7 +12,7 @@ namespace CampusCRM.MVC.Models
         
         [Required]
         [StringLength(100, MinimumLength = 2)]
-        [Display(Name = "Description", Prompt = "Title of topic")]
+        [Display(Name = "Title", Prompt = "Title of topic")]
         public string Title { get; set; }
 
         [Required]
