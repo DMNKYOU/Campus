@@ -1,4 +1,4 @@
-## !! USE EntityFrameworkCore\Update-Database for DB work !!
+## !!! USE EntityFrameworkCore\Update-Database for DB work !!!
 
 
 # Campus
