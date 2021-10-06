@@ -5,7 +5,8 @@ using MailKit.Net.Smtp;
 
 namespace CampusCRM.Mail
 {
-    public class EmailService : IMailService {
+    public class EmailService : IMailService 
+    {
 
         private readonly EmailSettingsModel _emailSettings;
 
